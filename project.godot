@@ -44,18 +44,11 @@ config/icon="res://icon.png"
 [autoload]
 
 GameManager="*res://Scripts/GameManager.gd"
-UserData="*res://addons/github-integration/scripts/user_data.gd"
-IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
-RestHandler="*res://addons/github-integration/scripts/RestHandler.gd"
 
 [display]
 
 window/size/height=720
 window/stretch/mode="2d"
-
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/github-integration/plugin.cfg" )
 
 [physics]
 
