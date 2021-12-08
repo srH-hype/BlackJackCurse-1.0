@@ -5,15 +5,13 @@ var deck = Array()
 var cardBack = preload("res://Assects/cards/card_back.png")
 var handValue = 0
 var handSize = 0
-var popUpGO = preload("res://Scenes/GameOver.tscn")
-signal signalDraw(Card)
+var newCard 
 
 
 func _ready():
 	fillDeck()
 	randomize()
 	deck.shuffle()
-	var gameOverS = popUpGO.instance()
 
 func fillDeck():
 	deck.clear()
@@ -27,8 +25,7 @@ func fillDeck():
 		s += 1
 
 func drawCard():
-	var interface = Game.get_node('Interface')
-	interface.get_node('hand').add_child(deck[0])
+	newCard = deck[0]
 	updateCard(deck[0].value)
 	handSize += 1
 	print(handValue)
@@ -51,23 +48,15 @@ func checkHand():
 		gameOver()
 
 func gameOver():
-	deleteHand()
-	var gameOverS = popUpGO.instance()
-	Game.add_child(gameOverS) 
-	
+	get_tree().change_scene("res://Scenes/GameOver.tscn")
+
+
 func resectGame():
-	for c in range(deck.size()-handSize):
-		deck[c].queue_free()
 	deck.clear()
 	handSize = 0
-	handValue = 0
-	Game.get_node('Interface').get_node('hand') 
+	handValue = 0 
 	fillDeck()
 	randomize()
 	deck.shuffle()
 
-func deleteHand():
-	var hand = Game.get_node('Interface').get_node('hand')
-	for n in hand.get_children():
-		hand.remove_child(n)
-		n.queue_free()
+
