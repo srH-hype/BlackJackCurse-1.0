@@ -1,16 +1,19 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Assects/icons/endTurnLogo.png" type="Texture" id=2]
 [ext_resource path="res://Assects/cards/card_back.png" type="Texture" id=3]
 [ext_resource path="res://Assects/icons/discardLogo.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/Interface.gd" type="Script" id=5]
+[ext_resource path="res://Assects/icons/backLife.png" type="Texture" id=6]
+[ext_resource path="res://Assects/icons/frontLife.png" type="Texture" id=7]
+[ext_resource path="res://Assects/icons/heart.png" type="Texture" id=8]
 
 [sub_resource type="Animation" id=1]
 resource_name = "draw"
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("deckButton/Sprite:position")
+tracks/0/path = NodePath("deckButton/deck:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -73,7 +76,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="Interface/deckButton"]
+[node name="deck" type="Sprite" parent="Interface/deckButton"]
 position = Vector2( 29.333, 28 )
 texture = ExtResource( 3 )
 
@@ -145,6 +148,35 @@ margin_top = 10.0
 margin_right = 121.0
 margin_bottom = 506.0
 columns = 4
+
+[node name="Heart" type="Sprite" parent="Interface"]
+position = Vector2( 32, 32.13 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 8 )
+
+[node name="lifeBar" type="TextureProgress" parent="Interface"]
+margin_left = 56.0
+margin_right = 312.0
+margin_bottom = 64.0
+max_value = 21.0
+value = 21.0
+texture_under = ExtResource( 6 )
+texture_progress = ExtResource( 7 )
+texture_progress_offset = Vector2( 32, 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="border" type="ReferenceRect" parent="Interface/lifeBar"]
+margin_left = -52.0
+margin_top = 4.0
+margin_right = 259.0
+margin_bottom = 60.0
+border_width = 8.0
+editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="animation_finished" from="Interface/AnimationPlayer" to="Interface" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Interface/deckButton" to="Interface" method="_on_deckButton_pressed"]

@@ -6,6 +6,8 @@ var cardBack = preload("res://Assects/cards/card_back.png")
 var handValue = 0
 var handSize = 0
 var newCard 
+var life = 21
+var resetingHand = false
 
 
 func _ready():
@@ -30,7 +32,8 @@ func drawCard():
 	handSize += 1
 	print(handValue)
 	deck.remove(0)
-	checkHand()
+	endTurn()
+	
 
 func updateCard(value):
 	if (value >=2 && value <= 10):
@@ -45,16 +48,33 @@ func updateCard(value):
 
 func checkHand():
 	if(handValue >21 ):
-		gameOver()
+		handUpTo21()
 
 func gameOver():
 	get_tree().change_scene("res://Scenes/GameOver.tscn")
 
+func handUpTo21():
+	var damage = handValue - 21
+	takeDamage(damage)
+	resetHand()
+
+func takeDamage(damage):
+	life = life - damage
+
+func endTurn():
+	checkHand()
+	if life <= 0:
+		gameOver()
+
+func resetHand():
+	handSize = 0
+	handValue = 0 
+	resetingHand = true
 
 func resectGame():
 	deck.clear()
-	handSize = 0
-	handValue = 0 
+	resetHand()
+	life = 21
 	fillDeck()
 	randomize()
 	deck.shuffle()
