@@ -178,6 +178,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="timerHand" type="Timer" parent="Interface"]
+wait_time = 0.7
+one_shot = true
+
 [connection signal="animation_finished" from="Interface/AnimationPlayer" to="Interface" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Interface/deckButton" to="Interface" method="_on_deckButton_pressed"]
 [connection signal="pressed" from="Interface/discardButton" to="Interface" method="_on_discardButton_pressed"]
+[connection signal="timeout" from="Interface/timerHand" to="Interface" method="_on_timerHand_timeout"]
