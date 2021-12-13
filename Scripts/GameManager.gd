@@ -4,13 +4,15 @@ onready var Game = get_node('/root/Game/')
 var deck = Array()
 var cardBack = preload("res://Assects/cards/card_back.png")
 var handValue = 0
-var handSize = 0
 var newCard 
 var life = 21
 var resetingHand = false
+var discardDeck = Array()
+var hand = Array()
 
 
 func _ready():
+	fillDiscardDeck()
 	fillDeck()
 	randomize()
 	deck.shuffle()
@@ -26,10 +28,20 @@ func fillDeck():
 			v = v + 1
 		s += 1
 
+func fillDiscardDeck():
+	var s = 1
+	var v = 1
+	while s < 5:
+		v = 1
+		while v < 14:
+			discardDeck.append(SmallCard.new(s,v))
+			v = v + 1
+		s += 1
+
 func drawCard():
 	newCard = deck[0]
 	updateCard(deck[0].value)
-	handSize += 1
+	hand.append(deck[0])
 	print(handValue)
 	deck.remove(0)
 	endTurn()
@@ -67,7 +79,6 @@ func endTurn():
 		gameOver()
 
 func resetHand():
-	handSize = 0
 	handValue = 0 
 	resetingHand = true
 

@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "InvitationItem",
 "language": "GDScript",
 "path": "res://addons/github-integration/scripts/InvitationItem.gd"
+}, {
+"base": "TextureButton",
+"class": "SmallCard",
+"language": "GDScript",
+"path": "res://Scripts/SmallCard.gd"
 } ]
 _global_script_class_icons={
 "Card": "",
 "ContributorClass": "",
 "GistItem": "",
-"InvitationItem": ""
+"InvitationItem": "",
+"SmallCard": ""
 }
 
 [application]

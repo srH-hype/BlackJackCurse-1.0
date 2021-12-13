@@ -117,12 +117,13 @@ __meta__ = {
 
 [node name="discardHand" type="ColorRect" parent="Interface"]
 visible = false
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -140.0
+anchor_left = 0.878
+anchor_right = 0.971
+anchor_bottom = 0.712
+margin_left = -39.072
 margin_top = 6.0
-margin_bottom = -190.0
+margin_right = 29.6959
+margin_bottom = 17.36
 rect_min_size = Vector2( 128, 0 )
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
@@ -132,22 +133,25 @@ __meta__ = {
 [node name="border" type="ReferenceRect" parent="Interface/discardHand"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 7.0
-margin_top = 1.0
-margin_right = -7.14001
-margin_bottom = -7.0
+margin_right = -7.0
+margin_bottom = 7.0
 border_width = 14.0
 editor_only = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GridContainer" type="GridContainer" parent="Interface/discardHand"]
-margin_left = 17.0
-margin_top = 10.0
-margin_right = 121.0
-margin_bottom = 506.0
+[node name="discard" type="GridContainer" parent="Interface/discardHand"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 16.0
+margin_right = -15.0
+margin_bottom = -13.0
 columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Heart" type="Sprite" parent="Interface"]
 position = Vector2( 32, 32.13 )

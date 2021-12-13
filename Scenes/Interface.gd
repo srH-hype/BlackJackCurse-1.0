@@ -4,8 +4,7 @@ extends CanvasLayer
 
 
 func _ready():
-	pass
-	
+	updateDiscardDeck()
 
 func _on_deckButton_pressed():
 	GameManager.drawCard()
@@ -15,6 +14,7 @@ func _on_deckButton_pressed():
 func _on_discardButton_pressed():
 	if ($discardHand.visible == false):
 		$discardHand.visible = true
+		
 	else:
 		$discardHand.visible = false
 
@@ -28,6 +28,7 @@ func updateHand():
 		$timerHand.start()
 		GameManager.resetingHand = false
 	endWait()
+	updateDiscardDeck()
 
 func wait():
 	$deckButton.disabled = true
@@ -39,3 +40,10 @@ func _on_timerHand_timeout():
 	for n in $hand.get_children():
 		$hand.remove_child(n)
 		n.queue_free()
+
+func updateDiscardDeck():
+	for n in range(GameManager.discardDeck.size()):
+		$discardHand/discard.add_child(GameManager.discardDeck[n])
+
+
+
