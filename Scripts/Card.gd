@@ -20,4 +20,6 @@ func _init(var s, var v):
 	set_scale(Vector2(2,2))
 	
 
-
+func _pressed():
+	GameManager.cardToDiscardDeck(self)
+	queue_free()
