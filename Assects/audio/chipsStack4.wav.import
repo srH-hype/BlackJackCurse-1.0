@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/chipsStack4.wav-12fe7333c7a0a3de47456a1ab9d5128b.sample"
+
+[deps]
+
+source_file="res://Assects/audio/chipsStack4.wav"
+dest_files=[ "res://.import/chipsStack4.wav-12fe7333c7a0a3de47456a1ab9d5128b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

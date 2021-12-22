@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Assects/icons/endTurnLogo.png" type="Texture" id=2]
@@ -8,6 +8,14 @@
 [ext_resource path="res://Assects/icons/backLife.png" type="Texture" id=6]
 [ext_resource path="res://Assects/icons/frontLife.png" type="Texture" id=7]
 [ext_resource path="res://Assects/icons/heart.png" type="Texture" id=8]
+[ext_resource path="res://Assects/audio/cardPlace1.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assects/audio/chipsStack4.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assects/icons/heartHand.png" type="Texture" id=11]
+[ext_resource path="res://Assects/icons/clubHand.png" type="Texture" id=12]
+[ext_resource path="res://Assects/icons/spadeHand.png" type="Texture" id=13]
+[ext_resource path="res://Assects/icons/diamondHand.png" type="Texture" id=14]
+[ext_resource path="res://Assects/audio/cardSlide7.wav" type="AudioStream" id=15]
+[ext_resource path="res://Assects/audio/cardFan1.wav" type="AudioStream" id=16]
 
 [sub_resource type="Animation" id=1]
 resource_name = "draw"
@@ -24,6 +32,14 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 29.333, 28 ), Vector2( 29.333, 24 ), Vector2( 29.333, 20 ), Vector2( 29.333, 16 ), Vector2( 29.333, 27.6768 ) ]
 }
+
+[sub_resource type="ParticlesMaterial" id=2]
+emission_shape = 2
+emission_box_extents = Vector3( 7, 7, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 100, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
 
 [node name="Game" type="Node2D"]
 pause_mode = 1
@@ -49,6 +65,7 @@ margin_top = 536.0
 margin_right = 0.140015
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -62,8 +79,30 @@ margin_bottom = -7.0
 border_width = 14.0
 editor_only = false
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
+
+[node name="corner1" type="Sprite" parent="Interface/handBackground"]
+position = Vector2( 25, 20 )
+rotation = -0.785398
+texture = ExtResource( 11 )
+
+[node name="corner2" type="Sprite" parent="Interface/handBackground"]
+position = Vector2( 999.694, 160.124 )
+rotation = -0.785398
+texture = ExtResource( 14 )
+
+[node name="corner3" type="Sprite" parent="Interface/handBackground"]
+position = Vector2( 998.01, 20.9566 )
+rotation = -2.35619
+texture = ExtResource( 12 )
+
+[node name="corner4" type="Sprite" parent="Interface/handBackground"]
+position = Vector2( 25.7186, 157.926 )
+rotation = 0.785398
+scale = Vector2( 1, 1 )
+texture = ExtResource( 13 )
 
 [node name="deckButton" type="TextureButton" parent="Interface"]
 margin_left = 116.0
@@ -80,6 +119,16 @@ __meta__ = {
 position = Vector2( 29.333, 28 )
 texture = ExtResource( 3 )
 
+[node name="Particles2D" type="Particles2D" parent="Interface/deckButton"]
+position = Vector2( 26.457, -72.7935 )
+emitting = false
+amount = 54
+lifetime = 1.4
+one_shot = true
+speed_scale = 3.5
+process_material = SubResource( 2 )
+texture = ExtResource( 3 )
+
 [node name="hand" type="GridContainer" parent="Interface"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -90,6 +139,7 @@ margin_bottom = -75.0
 rect_scale = Vector2( 1.5, 1.5 )
 columns = 7
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -101,6 +151,7 @@ margin_bottom = 624.0
 rect_scale = Vector2( 2, 2 )
 texture_normal = ExtResource( 4 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -189,6 +240,18 @@ one_shot = true
 [node name="timerAction" type="Timer" parent="Interface"]
 wait_time = 0.9
 one_shot = true
+
+[node name="drawAudio" type="AudioStreamPlayer" parent="Interface"]
+stream = ExtResource( 9 )
+
+[node name="discardAudio" type="AudioStreamPlayer" parent="Interface"]
+stream = ExtResource( 10 )
+
+[node name="playCardAudio" type="AudioStreamPlayer" parent="Interface"]
+stream = ExtResource( 15 )
+
+[node name="shuffleAudio" type="AudioStreamPlayer" parent="Interface"]
+stream = ExtResource( 16 )
 
 [connection signal="animation_finished" from="Interface/AnimationPlayer" to="Interface" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Interface/deckButton" to="Interface" method="_on_deckButton_pressed"]

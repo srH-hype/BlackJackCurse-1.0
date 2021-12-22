@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/cardSlide7.wav-5770e1b0616435b096a7f3e644dbb1db.sample"
+
+[deps]
+
+source_file="res://Assects/audio/cardSlide7.wav"
+dest_files=[ "res://.import/cardSlide7.wav-5770e1b0616435b096a7f3e644dbb1db.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

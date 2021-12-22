@@ -2,17 +2,21 @@ extends CanvasLayer
 
 
 
-
 func _ready():
-	pass
+	GameManager.connect("drawSignal", self, "drawCard")
+	GameManager.connect("discardSignal", self, "updateDiscardDeck")
+	GameManager.connect("cardAudioSignal", self, "playCardAudioSignal")
+	GameManager.connect("reShuffleSignal", self,"reShuffle")
 
 func _on_deckButton_pressed():
+	$drawAudio.play()
 	GameManager.drawCard()
 	$AnimationPlayer.play("draw")
 	wait()
 	$timerAction.start()
 
 func _on_discardButton_pressed():
+	$discardAudio.play()
 	if ($discardHand.visible == false):
 		$discardHand.visible = true
 		
@@ -48,3 +52,22 @@ func updateDiscardDeck():
 
 func _on_timerAction_timeout():
 	endWait()
+
+func playCardAudioSignal():
+	$playCardAudio.play()
+
+func drawCard():
+	$drawAudio.play()
+	GameManager.drawCard()
+	$AnimationPlayer.play("draw")
+	wait()
+	$timerAction.start()
+
+func reShuffle():
+	$deckButton/Particles2D.emitting = true
+	$shuffleAudio.play()
+	updateHand()
+	updateDiscardDeck()
+	for n in $discardHand/discard.get_children():
+		$discardHand/discard.remove_child(n)
+		n.queue_free()

@@ -21,5 +21,5 @@ func _init(var s, var v):
 	
 
 func _pressed():
-	GameManager.cardToDiscardDeck(self)
+	GameManager.cardPressed(self)
 	queue_free()

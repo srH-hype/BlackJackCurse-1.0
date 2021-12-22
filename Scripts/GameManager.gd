@@ -10,7 +10,10 @@ var resetingHand = false
 var discardDeck = Array()
 var hand = Array()
 var timerGameOver = Timer.new()
-
+signal drawSignal
+signal discardSignal
+signal cardAudioSignal
+signal reShuffleSignal
 
 func _ready():
 	timerGameOver.connect("timeout",self,"gameOver")
@@ -35,22 +38,26 @@ func fillDiscardDeck():
 	for n in range(hand.size()):
 		discardDeck.append(SmallCard.new(hand[n].suit,hand[n].value))
 
-func cardToDiscardDeck(var c):
-	updateCard(-c.value)
-	print(handValue)
-	hand.erase(c)
-	discardDeck.append(SmallCard.new(c.suit,c.value))
-	if (hand.empty()):
-		drawCard()
-
 func drawCard():
-	newCard = deck[0]
-	updateCard(deck[0].value)
-	hand.append(deck[0])
-	print(handValue)
-	deck.remove(0)
+	if !deck.empty():
+		newCard = deck[0]
+		updateCard(deck[0].value)
+		hand.append(deck[0])
+		print(handValue)
+		deck.remove(0)
+	else:
+		reShuffleDeck()
 	endTurn()
-	
+
+func reShuffleDeck():
+	emit_signal("reShuffleSignal")
+	fillDeck()
+	randomize()
+	deck.shuffle()
+	discardDeck.clear()
+	if hand.empty():
+		emit_signal("drawSignal")
+
 
 func updateCard(value):
 	if (value > 0):
@@ -68,6 +75,14 @@ func updateCard(value):
 			handValue += value
 		else:
 			handValue += -10
+
+func cardValue(value):
+	if value >= 2 && value <= 10:
+		return value
+	elif value == 1:
+		return 11
+	else:
+		return 10
 
 func checkHand():
 	if(handValue >21 ):
@@ -95,12 +110,21 @@ func resetHand():
 	handValue = 0 
 
 func cardPressed(var c):
-	print("Card played ",c.value)
+	emit_signal("cardAudioSignal")
+	updateCard(-c.value)
+	hand.erase(c)
+	discardDeck.append(SmallCard.new(c.suit,c.value))
+	if (hand.empty()):
+		emit_signal("drawSignal")
+	emit_signal("discardSignal")
+	if c.suit == 1 or c.suit == 4:
+		print(cardValue(c.value), " Healing")
+	else:
+		print(cardValue(c.value), " Damage")
 
 func resectGame():
 	resetingHand = false
 	resetHand()
-	print("Hand ",handValue)
 	handValue = 0
 	discardDeck.clear()
 	deck.clear()
@@ -108,5 +132,4 @@ func resectGame():
 	fillDeck()
 	randomize()
 	deck.shuffle()
-
 
