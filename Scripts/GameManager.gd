@@ -23,6 +23,19 @@ func _ready():
 	randomize()
 	deck.shuffle()
 
+func reCheckHand():
+	handValue = 0
+	for n in range(hand.size()):
+		updateCard(hand[n].value)
+
+func eraseDuplicateCards():
+	for c1 in range(hand.size()):
+		for c2 in range(deck.size()):
+			if deck[c2].value == hand[c1].value && deck[c2].suit == hand[c1].suit :
+				deck.remove(c2)
+				break
+	print("Deck ", deck.size())
+
 func fillDeck():
 	deck.clear()
 	var s = 1
@@ -55,6 +68,7 @@ func reShuffleDeck():
 	randomize()
 	deck.shuffle()
 	discardDeck.clear()
+	eraseDuplicateCards()
 	if hand.empty():
 		emit_signal("drawSignal")
 
@@ -85,6 +99,7 @@ func cardValue(value):
 		return 10
 
 func checkHand():
+	reCheckHand()
 	if(handValue >21 ):
 		handUpTo21()
 

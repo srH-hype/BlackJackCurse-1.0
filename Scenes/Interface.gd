@@ -9,11 +9,7 @@ func _ready():
 	GameManager.connect("reShuffleSignal", self,"reShuffle")
 
 func _on_deckButton_pressed():
-	$drawAudio.play()
-	GameManager.drawCard()
-	$AnimationPlayer.play("draw")
-	wait()
-	$timerAction.start()
+	drawCard()
 
 func _on_discardButton_pressed():
 	$discardAudio.play()
@@ -48,7 +44,8 @@ func _on_timerHand_timeout():
 
 func updateDiscardDeck():
 	for n in range(GameManager.discardDeck.size()):
-		$discardHand/discard.add_child(GameManager.discardDeck[n])
+		if GameManager.discardDeck[n].get_parent() != $discardHand/discard:
+			$discardHand/discard.add_child(GameManager.discardDeck[n])
 
 func _on_timerAction_timeout():
 	endWait()

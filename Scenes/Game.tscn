@@ -101,7 +101,6 @@ texture = ExtResource( 12 )
 [node name="corner4" type="Sprite" parent="Interface/handBackground"]
 position = Vector2( 25.7186, 157.926 )
 rotation = 0.785398
-scale = Vector2( 1, 1 )
 texture = ExtResource( 13 )
 
 [node name="deckButton" type="TextureButton" parent="Interface"]
