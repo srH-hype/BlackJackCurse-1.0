@@ -9,7 +9,8 @@ var back
 var scale = Vector2(2,2)
 
 func _ready():
-	pass
+	GameManager.connect("waitSignal", self, "wait")
+	GameManager.connect("endWaitSignal", self, "endWait")
 
 func _init(var s, var v):
 	value = v
@@ -23,3 +24,9 @@ func _init(var s, var v):
 func _pressed():
 	GameManager.cardPressed(self)
 	queue_free()
+
+func wait():
+	disabled = true
+
+func endWait():
+	disabled = false

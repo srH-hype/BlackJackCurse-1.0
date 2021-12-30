@@ -7,6 +7,7 @@ func _ready():
 	GameManager.connect("discardSignal", self, "updateDiscardDeck")
 	GameManager.connect("cardAudioSignal", self, "playCardAudioSignal")
 	GameManager.connect("reShuffleSignal", self,"reShuffle")
+	GameManager.connect("resetHandSignal", self, "startTimerHand")
 
 func _on_deckButton_pressed():
 	drawCard()
@@ -25,16 +26,18 @@ func _on_AnimationPlayer_animation_finished(draw):
 
 func updateHand():
 	$lifeBar.value = GameManager.life
-	if GameManager.resetingHand:
-		$timerHand.start()
-		GameManager.resetingHand = false
 	updateDiscardDeck()
+
+func startTimerHand():
+	$timerHand.start()
 
 func wait():
 	$deckButton.disabled = true
+	GameManager.wait()
 
 func endWait():
 	$deckButton.disabled = false
+	GameManager.endWait()
 
 func _on_timerHand_timeout():
 	GameManager.resetHand()
@@ -68,3 +71,9 @@ func reShuffle():
 	for n in $discardHand/discard.get_children():
 		$discardHand/discard.remove_child(n)
 		n.queue_free()
+
+func _on_endTurnButton_pressed():
+	$AnimationInterface.play("endTurn")
+
+func endTurnAnimation():
+	$AnimationInterface.play("endTurn")

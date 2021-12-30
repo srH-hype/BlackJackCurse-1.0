@@ -6,7 +6,6 @@ var cardBack = preload("res://Assects/cards/card_back.png")
 var handValue = 0
 var newCard 
 var life = 21
-var resetingHand = false
 var discardDeck = Array()
 var hand = Array()
 var timerGameOver = Timer.new()
@@ -14,6 +13,9 @@ signal drawSignal
 signal discardSignal
 signal cardAudioSignal
 signal reShuffleSignal
+signal resetHandSignal
+signal waitSignal
+signal endWaitSignal
 
 func _ready():
 	timerGameOver.connect("timeout",self,"gameOver")
@@ -60,7 +62,7 @@ func drawCard():
 		deck.remove(0)
 	else:
 		reShuffleDeck()
-	endTurn()
+	checkLife()
 
 func reShuffleDeck():
 	emit_signal("reShuffleSignal")
@@ -110,12 +112,12 @@ func handUpTo21():
 	var damage = handValue - 21
 	takeDamage(damage)
 	fillDiscardDeck()
-	resetingHand = true
+	emit_signal("resetHandSignal")
 
 func takeDamage(damage):
 	life = life - damage
 
-func endTurn():
+func checkLife():
 	checkHand()
 	if life <= 0:
 		timerGameOver.start(1)
@@ -137,8 +139,13 @@ func cardPressed(var c):
 	else:
 		print(cardValue(c.value), " Damage")
 
+func wait():
+	emit_signal("waitSignal")
+
+func endWait():
+	emit_signal("endWaitSignal")
+
 func resectGame():
-	resetingHand = false
 	resetHand()
 	handValue = 0
 	discardDeck.clear()
