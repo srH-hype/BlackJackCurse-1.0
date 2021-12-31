@@ -3,11 +3,17 @@ extends CanvasLayer
 
 
 func _ready():
+	$deckButton/Particles2D.emitting = true
+	$shuffleAudio.play()
 	GameManager.connect("drawSignal", self, "drawCard")
 	GameManager.connect("discardSignal", self, "updateDiscardDeck")
 	GameManager.connect("cardAudioSignal", self, "playCardAudioSignal")
 	GameManager.connect("reShuffleSignal", self,"reShuffle")
 	GameManager.connect("resetHandSignal", self, "startTimerHand")
+	GameManager.connect("waitSignal", self,"wait")
+	GameManager.connect("endWaitSignal", self, "endWait")
+	GameManager.connect("endTurnSignal", self, "endTurnAnimation")
+	drawCard()
 
 func _on_deckButton_pressed():
 	drawCard()
@@ -33,11 +39,14 @@ func startTimerHand():
 
 func wait():
 	$deckButton.disabled = true
-	GameManager.wait()
 
 func endWait():
 	$deckButton.disabled = false
-	GameManager.endWait()
+
+
+func endTurn():
+	endTurnAnimation()
+	endWait()
 
 func _on_timerHand_timeout():
 	GameManager.resetHand()
@@ -50,9 +59,6 @@ func updateDiscardDeck():
 		if GameManager.discardDeck[n].get_parent() != $discardHand/discard:
 			$discardHand/discard.add_child(GameManager.discardDeck[n])
 
-func _on_timerAction_timeout():
-	endWait()
-
 func playCardAudioSignal():
 	$playCardAudio.play()
 
@@ -61,7 +67,6 @@ func drawCard():
 	GameManager.drawCard()
 	$AnimationPlayer.play("draw")
 	wait()
-	$timerAction.start()
 
 func reShuffle():
 	$deckButton/Particles2D.emitting = true
@@ -73,7 +78,7 @@ func reShuffle():
 		n.queue_free()
 
 func _on_endTurnButton_pressed():
-	$AnimationInterface.play("endTurn")
+	GameManager.endTurn()
 
 func endTurnAnimation():
 	$AnimationInterface.play("endTurn")

@@ -292,10 +292,6 @@ __meta__ = {
 wait_time = 0.7
 one_shot = true
 
-[node name="timerAction" type="Timer" parent="Interface"]
-wait_time = 0.9
-one_shot = true
-
 [node name="drawAudio" type="AudioStreamPlayer" parent="Interface"]
 stream = ExtResource( 9 )
 
@@ -325,7 +321,6 @@ visible = false
 position = Vector2( 537.804, 278.508 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 3 )
-frame = 1
 playing = true
 
 [node name="Label1" type="Label" parent="Interface/blackJack"]
@@ -357,4 +352,3 @@ __meta__ = {
 [connection signal="pressed" from="Interface/discardButton" to="Interface" method="_on_discardButton_pressed"]
 [connection signal="pressed" from="Interface/endTurnButton" to="Interface" method="_on_endTurnButton_pressed"]
 [connection signal="timeout" from="Interface/timerHand" to="Interface" method="_on_timerHand_timeout"]
-[connection signal="timeout" from="Interface/timerAction" to="Interface" method="_on_timerAction_timeout"]

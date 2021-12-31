@@ -9,6 +9,7 @@ var life = 21
 var discardDeck = Array()
 var hand = Array()
 var timerGameOver = Timer.new()
+var timerWait = Timer.new()
 signal drawSignal
 signal discardSignal
 signal cardAudioSignal
@@ -16,11 +17,15 @@ signal reShuffleSignal
 signal resetHandSignal
 signal waitSignal
 signal endWaitSignal
+signal endTurnSignal
 
 func _ready():
 	timerGameOver.connect("timeout",self,"gameOver")
 	timerGameOver.set_one_shot(true)
+	timerWait.connect("timeout", self, "endWait")
+	timerWait.set_one_shot(true)
 	add_child(timerGameOver)
+	add_child(timerWait)
 	fillDeck()
 	randomize()
 	deck.shuffle()
@@ -54,6 +59,7 @@ func fillDiscardDeck():
 		discardDeck.append(SmallCard.new(hand[n].suit,hand[n].value))
 
 func drawCard():
+	waitAndTimer()
 	if !deck.empty():
 		newCard = deck[0]
 		updateCard(deck[0].value)
@@ -109,6 +115,7 @@ func gameOver():
 	get_tree().change_scene("res://Scenes/GameOver.tscn")
 
 func handUpTo21():
+	endTurn()
 	var damage = handValue - 21
 	takeDamage(damage)
 	fillDiscardDeck()
@@ -120,13 +127,15 @@ func takeDamage(damage):
 func checkLife():
 	checkHand()
 	if life <= 0:
-		timerGameOver.start(1)
+		timerGameOver.start(0.5)
 
 func resetHand():
 	hand.clear()
 	handValue = 0 
 
 func cardPressed(var c):
+	endTurn()
+	waitAndTimer()
 	emit_signal("cardAudioSignal")
 	updateCard(-c.value)
 	hand.erase(c)
@@ -144,6 +153,13 @@ func wait():
 
 func endWait():
 	emit_signal("endWaitSignal")
+
+func endTurn():
+	emit_signal("endTurnSignal")
+
+func waitAndTimer():
+	wait()
+	timerWait.start(0.7)
 
 func resectGame():
 	resetHand()
