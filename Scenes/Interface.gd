@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-
+var countBlackJack = 0
 
 func _ready():
 	$deckButton/Particles2D.emitting = true
@@ -13,6 +13,7 @@ func _ready():
 	GameManager.connect("waitSignal", self,"wait")
 	GameManager.connect("endWaitSignal", self, "endWait")
 	GameManager.connect("endTurnSignal", self, "endTurnAnimation")
+	GameManager.connect("blackJackSignal", self, "blackJack")
 	drawCard()
 
 func _on_deckButton_pressed():
@@ -53,6 +54,7 @@ func _on_timerHand_timeout():
 	for n in $hand.get_children():
 		$hand.remove_child(n)
 		n.queue_free()
+	drawCard()
 
 func updateDiscardDeck():
 	for n in range(GameManager.discardDeck.size()):
@@ -80,5 +82,25 @@ func reShuffle():
 func _on_endTurnButton_pressed():
 	GameManager.endTurn()
 
+func blackJack():
+	$blackJack/timerBJ.set_one_shot(false)
+	countBlackJack = 0
+	startTimerHand()
+	$blackJack.visible = true
+	$blackJack/timerBJ.start()
+
 func endTurnAnimation():
 	$AnimationInterface.play("endTurn")
+
+func _on_timerBJ_timeout():
+	countBlackJack += 1
+	if countBlackJack == 1:
+		$blackJack/Label1.visible = true
+	if countBlackJack == 2:
+		$blackJack/Label2.visible = true
+		$blackJack/timerBJ.set_one_shot(true)
+	if countBlackJack == 3:
+		$blackJack.visible = false
+		$blackJack/Label1.visible = false
+		$blackJack/Label2.visible = false
+		$skullParticles.emitting = true

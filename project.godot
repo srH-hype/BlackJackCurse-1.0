@@ -45,11 +45,12 @@ _global_script_class_icons={
 [application]
 
 config/name="BlackJackCurse"
-config/icon="res://icon.png"
+config/icon="res://Assects/icons/CoB_logo.png"
 
 [autoload]
 
 GameManager="*res://Scripts/GameManager.gd"
+EnemiesSingelton="*res://Scripts/EnemiesSingelton.gd"
 
 [display]
 

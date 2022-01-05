@@ -5,6 +5,7 @@ var deck = Array()
 var cardBack = preload("res://Assects/cards/card_back.png")
 var handValue = 0
 var newCard 
+var asInHand = 0
 var life = 21
 var discardDeck = Array()
 var hand = Array()
@@ -18,6 +19,7 @@ signal resetHandSignal
 signal waitSignal
 signal endWaitSignal
 signal endTurnSignal
+signal blackJackSignal
 
 func _ready():
 	timerGameOver.connect("timeout",self,"gameOver")
@@ -29,11 +31,6 @@ func _ready():
 	fillDeck()
 	randomize()
 	deck.shuffle()
-
-func reCheckHand():
-	handValue = 0
-	for n in range(hand.size()):
-		updateCard(hand[n].value)
 
 func eraseDuplicateCards():
 	for c1 in range(hand.size()):
@@ -62,6 +59,7 @@ func drawCard():
 	waitAndTimer()
 	if !deck.empty():
 		newCard = deck[0]
+		countAs(deck[0].value)
 		updateCard(deck[0].value)
 		hand.append(deck[0])
 		print(handValue)
@@ -80,18 +78,24 @@ func reShuffleDeck():
 	if hand.empty():
 		emit_signal("drawSignal")
 
+func countAs(value):
+	if value == 1 :
+		asInHand += 1
+	if value == -1 :
+		asInHand -= 1
 
 func updateCard(value):
 	if (value > 0):
-		if (value >=2 && value <= 10):
-			handValue += value
-		elif(value == 1):
-			if(handValue == 10):
-				handValue += 11
+		if (value >=1 && value <= 10):
+			if asInHand != 0 && handValue + value == 11:
+				handValue += value + 10
 			else:
-				handValue += 1
+				handValue += value 
 		else:
-			handValue += 10
+			if asInHand != 0 && handValue + 10 == 11:
+				handValue += 10 + 10
+			else:
+				handValue += 10 
 	else:
 		if (value <=-1 && value >= -10):
 			handValue += value
@@ -107,9 +111,16 @@ func cardValue(value):
 		return 10
 
 func checkHand():
-	reCheckHand()
-	if(handValue >21 ):
+	if handValue >21 :
 		handUpTo21()
+	if handValue == 21:
+		blackJack()
+
+func blackJack():
+	print("BlackJack")
+	endTurn()
+	fillDiscardDeck()
+	emit_signal("blackJackSignal")
 
 func gameOver():
 	get_tree().change_scene("res://Scenes/GameOver.tscn")
@@ -130,6 +141,7 @@ func checkLife():
 		timerGameOver.start(0.5)
 
 func resetHand():
+	asInHand = 0
 	hand.clear()
 	handValue = 0 
 
