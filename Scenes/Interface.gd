@@ -14,6 +14,7 @@ func _ready():
 	GameManager.connect("endWaitSignal", self, "endWait")
 	GameManager.connect("endTurnSignal", self, "endTurnAnimation")
 	GameManager.connect("blackJackSignal", self, "blackJack")
+	GameManager.connect("lifeBarSignal", self, "updateLifeBar")
 	drawCard()
 
 func _on_deckButton_pressed():
@@ -32,8 +33,11 @@ func _on_AnimationPlayer_animation_finished(draw):
 	updateHand()
 
 func updateHand():
-	$lifeBar.value = GameManager.life
+	updateLifeBar()
 	updateDiscardDeck()
+
+func updateLifeBar():
+	$lifeBar.value = GameManager.life
 
 func startTimerHand():
 	$timerHand.start()
@@ -43,7 +47,6 @@ func wait():
 
 func endWait():
 	$deckButton.disabled = false
-
 
 func endTurn():
 	endTurnAnimation()

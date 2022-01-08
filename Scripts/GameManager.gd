@@ -20,6 +20,7 @@ signal waitSignal
 signal endWaitSignal
 signal endTurnSignal
 signal blackJackSignal
+signal lifeBarSignal
 
 func _ready():
 	timerGameOver.connect("timeout",self,"gameOver")
@@ -64,6 +65,8 @@ func drawCard():
 		hand.append(deck[0])
 		print(handValue)
 		deck.remove(0)
+		if hand.size() == 7 && handValue < 21:
+			charlieSeven()
 	else:
 		reShuffleDeck()
 	checkLife()
@@ -116,8 +119,12 @@ func checkHand():
 	if handValue == 21:
 		blackJack()
 
+func charlieSeven():
+	print("Charlie Seven")
+
 func blackJack():
 	print("BlackJack")
+	life = 21
 	endTurn()
 	fillDiscardDeck()
 	emit_signal("blackJackSignal")
@@ -140,25 +147,47 @@ func checkLife():
 	if life <= 0:
 		timerGameOver.start(0.5)
 
+func healing(value):
+	print(cardValue(value), " Healing")
+	if life + value >= 21:
+		life = 21
+	else:
+		life += value
+	emit_signal("lifeBarSignal")
+
 func resetHand():
 	asInHand = 0
 	hand.clear()
 	handValue = 0 
 
 func cardPressed(var c):
-	endTurn()
-	waitAndTimer()
-	emit_signal("cardAudioSignal")
-	updateCard(-c.value)
-	hand.erase(c)
-	discardDeck.append(SmallCard.new(c.suit,c.value))
-	if (hand.empty()):
-		emit_signal("drawSignal")
-	emit_signal("discardSignal")
 	if c.suit == 1 or c.suit == 4:
-		print(cardValue(c.value), " Healing")
+		if life < 21:
+			healing(cardValue(c.value))
+			endTurn()
+			waitAndTimer()
+			emit_signal("cardAudioSignal")
+			updateCard(-c.value)
+			hand.erase(c)
+			c.queue_free()
+			discardDeck.append(SmallCard.new(c.suit,c.value))
+			if (hand.empty()):
+				emit_signal("drawSignal")
+			emit_signal("discardSignal")
+		else:
+			print("Full life")
 	else:
 		print(cardValue(c.value), " Damage")
+		endTurn()
+		waitAndTimer()
+		emit_signal("cardAudioSignal")
+		updateCard(-c.value)
+		hand.erase(c)
+		c.queue_free()
+		discardDeck.append(SmallCard.new(c.suit,c.value))
+		if (hand.empty()):
+			emit_signal("drawSignal")
+		emit_signal("discardSignal")
 
 func wait():
 	emit_signal("waitSignal")

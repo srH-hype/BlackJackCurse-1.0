@@ -6,7 +6,6 @@ var suit
 var value
 var face
 var back
-var scale = Vector2(2,2)
 
 func _ready():
 	GameManager.connect("waitSignal", self, "wait")
@@ -18,15 +17,21 @@ func _init(var s, var v):
 	face = load("res://Assects/cards/card-"+str(suit)+"-"+str(value)+".png")
 	back = GameManager.cardBack
 	set_normal_texture(face)
+	if suit == 1 || suit == 4:
+		set_pressed_texture(load("res://Assects/cards/card_heal.png"))
+	else:
+		set_pressed_texture(load("res://Assects/cards/card_attack.png"))
 	set_scale(Vector2(2,2))
-	
+
 
 func _pressed():
 	GameManager.cardPressed(self)
-	queue_free()
 
 func wait():
 	disabled = true
 
 func endWait():
+	if suit == 1 || suit == 4:
+		if GameManager.life == 21:
+			set_pressed_texture(load("res://Assects/cards/card_NoHeal.png"))
 	disabled = false
