@@ -14,6 +14,7 @@ func _ready():
 	GameManager.connect("endWaitSignal", self, "endWait")
 	GameManager.connect("endTurnSignal", self, "endTurnAnimation")
 	GameManager.connect("blackJackSignal", self, "blackJack")
+	GameManager.connect("charlieSevenSignal", self, "charlieSeven")
 	GameManager.connect("lifeBarSignal", self, "updateLifeBar")
 	drawCard()
 
@@ -40,7 +41,7 @@ func updateLifeBar():
 	$lifeBar.value = GameManager.life
 
 func startTimerHand():
-	$timerHand.start()
+		$timerHand.start()
 
 func wait():
 	$deckButton.disabled = true
@@ -92,6 +93,10 @@ func blackJack():
 	$blackJack.visible = true
 	$blackJack/timerBJ.start()
 
+func charlieSeven():
+	startTimerHand()
+	$charlieSeven.play("seven")
+
 func endTurnAnimation():
 	$AnimationInterface.play("endTurn")
 
@@ -107,3 +112,7 @@ func _on_timerBJ_timeout():
 		$blackJack/Label1.visible = false
 		$blackJack/Label2.visible = false
 		$skullParticles.emitting = true
+
+
+func _on_charlieSeven_animation_finished():
+	$charlieSeven.play("null")

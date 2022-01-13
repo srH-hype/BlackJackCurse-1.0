@@ -11,6 +11,7 @@ var discardDeck = Array()
 var hand = Array()
 var timerGameOver = Timer.new()
 var timerWait = Timer.new()
+var drawingCard = false
 signal drawSignal
 signal discardSignal
 signal cardAudioSignal
@@ -20,6 +21,7 @@ signal waitSignal
 signal endWaitSignal
 signal endTurnSignal
 signal blackJackSignal
+signal charlieSevenSignal
 signal lifeBarSignal
 
 func _ready():
@@ -78,7 +80,7 @@ func reShuffleDeck():
 	deck.shuffle()
 	discardDeck.clear()
 	eraseDuplicateCards()
-	if hand.empty():
+	if drawingCard == false :
 		emit_signal("drawSignal")
 
 func countAs(value):
@@ -121,6 +123,9 @@ func checkHand():
 
 func charlieSeven():
 	print("Charlie Seven")
+	life = 21
+	endTurn()
+	emit_signal("charlieSevenSignal")
 
 func blackJack():
 	print("BlackJack")
@@ -133,6 +138,7 @@ func gameOver():
 	get_tree().change_scene("res://Scenes/GameOver.tscn")
 
 func handUpTo21():
+	drawingCard = true
 	endTurn()
 	var damage = handValue - 21
 	takeDamage(damage)
@@ -193,6 +199,7 @@ func wait():
 	emit_signal("waitSignal")
 
 func endWait():
+	drawingCard = false
 	emit_signal("endWaitSignal")
 
 func endTurn():
