@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/achieved.ogg-5e3da90bbaf892b3370f81dfd9d6124b.oggstr"
+
+[deps]
+
+source_file="res://Assects/audio/achieved.ogg"
+dest_files=[ "res://.import/achieved.ogg-5e3da90bbaf892b3370f81dfd9d6124b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

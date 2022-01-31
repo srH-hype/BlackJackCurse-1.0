@@ -16,6 +16,8 @@ func _ready():
 	GameManager.connect("blackJackSignal", self, "blackJack")
 	GameManager.connect("charlieSevenSignal", self, "charlieSeven")
 	GameManager.connect("lifeBarSignal", self, "updateLifeBar")
+	GameManager.connect("gameOverAudio", self, "playGameOVerAudio")
+	GameManager.connect("invalidCardAudio", self, "playInvalidCardAudio")
 	drawCard()
 
 func _on_deckButton_pressed():
@@ -92,10 +94,12 @@ func blackJack():
 	startTimerHand()
 	$blackJack.visible = true
 	$blackJack/timerBJ.start()
+	$blackJackAudio.play()
 
 func charlieSeven():
 	startTimerHand()
 	$charlieSeven.play("seven")
+	$charlie7Audio.play()
 
 func endTurnAnimation():
 	$AnimationInterface.play("endTurn")
@@ -113,6 +117,11 @@ func _on_timerBJ_timeout():
 		$blackJack/Label2.visible = false
 		$skullParticles.emitting = true
 
+func playGameOVerAudio():
+	$gameOverAudio.play()
+
+func playInvalidCardAudio():
+	$invalidCardAudio.play()
 
 func _on_charlieSeven_animation_finished():
 	$charlieSeven.play("null")

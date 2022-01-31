@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/fout-02.ogg-2fb1bd8fab67b90191ebb5901d45bdd0.oggstr"
+
+[deps]
+
+source_file="res://Assects/audio/fout-02.ogg"
+dest_files=[ "res://.import/fout-02.ogg-2fb1bd8fab67b90191ebb5901d45bdd0.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

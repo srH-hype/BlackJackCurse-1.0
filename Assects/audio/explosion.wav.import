@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/explosion.wav-23f052aa55b0210095889d3d1a1e7c29.sample"
+
+[deps]
+
+source_file="res://Assects/audio/explosion.wav"
+dest_files=[ "res://.import/explosion.wav-23f052aa55b0210095889d3d1a1e7c29.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

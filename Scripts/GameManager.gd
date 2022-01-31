@@ -23,6 +23,8 @@ signal endTurnSignal
 signal blackJackSignal
 signal charlieSevenSignal
 signal lifeBarSignal
+signal gameOverAudio
+signal invalidCardAudio
 
 func _ready():
 	timerGameOver.connect("timeout",self,"gameOver")
@@ -151,6 +153,7 @@ func takeDamage(damage):
 func checkLife():
 	checkHand()
 	if life <= 0:
+		emit_signal("gameOverAudio")
 		timerGameOver.start(0.5)
 
 func healing(value):
@@ -181,7 +184,7 @@ func cardPressed(var c):
 				emit_signal("drawSignal")
 			emit_signal("discardSignal")
 		else:
-			print("Full life")
+			emit_signal("invalidCardAudio")
 	else:
 		print(cardValue(c.value), " Damage")
 		endTurn()

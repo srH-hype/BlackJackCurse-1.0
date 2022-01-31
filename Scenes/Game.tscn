@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Assects/icons/endTurnLogo.png" type="Texture" id=2]
@@ -28,6 +28,10 @@
 [ext_resource path="res://Assects/icons/charlie7/charlieSeven0005.png" type="Texture" id=26]
 [ext_resource path="res://Assects/icons/charlie7/charlieSeven0003.png" type="Texture" id=27]
 [ext_resource path="res://Assects/icons/charlie7/charlieSeven0002.png" type="Texture" id=28]
+[ext_resource path="res://Assects/audio/achieved.ogg" type="AudioStream" id=29]
+[ext_resource path="res://Assects/audio/explosion.wav" type="AudioStream" id=30]
+[ext_resource path="res://Assects/audio/fout-02.ogg" type="AudioStream" id=31]
+[ext_resource path="res://Assects/audio/Noise Select 2.wav" type="AudioStream" id=32]
 
 [sub_resource type="Animation" id=6]
 resource_name = "endTurn"
@@ -69,6 +73,19 @@ gravity = Vector3( 0, 100, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ ExtResource( 22 ), ExtResource( 23 ), ExtResource( 28 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 21 ) ],
+"loop": false,
+"name": "seven",
+"speed": 14.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "null",
+"speed": 5.0
+} ]
+
 [sub_resource type="ParticlesMaterial" id=5]
 lifetime_randomness = 1.0
 emission_shape = 1
@@ -99,19 +116,6 @@ animations = [ {
 size = 130
 outline_color = Color( 1, 0, 0, 1 )
 font_data = ExtResource( 19 )
-
-[sub_resource type="SpriteFrames" id=7]
-animations = [ {
-"frames": [ ExtResource( 22 ), ExtResource( 23 ), ExtResource( 28 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 21 ) ],
-"loop": false,
-"name": "seven",
-"speed": 14.0
-}, {
-"frames": [  ],
-"loop": true,
-"name": "null",
-"speed": 5.0
-} ]
 
 [node name="Game" type="Node2D"]
 pause_mode = 1
@@ -236,7 +240,6 @@ margin_left = 54.6489
 margin_top = 606.271
 margin_right = 86.6489
 margin_bottom = 638.271
-rect_rotation = 360.0
 rect_scale = Vector2( 2, 2 )
 rect_pivot_offset = Vector2( 16, 16 )
 texture_normal = ExtResource( 2 )
@@ -282,11 +285,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Heart" type="Sprite" parent="Interface"]
-position = Vector2( 32, 32.13 )
-scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-
 [node name="lifeBar" type="TextureProgress" parent="Interface"]
 margin_left = 56.0
 margin_right = 312.0
@@ -327,6 +325,24 @@ stream = ExtResource( 15 )
 [node name="shuffleAudio" type="AudioStreamPlayer" parent="Interface"]
 stream = ExtResource( 16 )
 
+[node name="blackJackAudio" type="AudioStreamPlayer" parent="Interface"]
+stream = ExtResource( 30 )
+
+[node name="charlie7Audio" type="AudioStreamPlayer" parent="Interface"]
+stream = ExtResource( 29 )
+
+[node name="gameOverAudio" type="AudioStreamPlayer" parent="Interface"]
+stream = ExtResource( 31 )
+
+[node name="invalidCardAudio" type="AudioStreamPlayer" parent="Interface"]
+stream = ExtResource( 32 )
+
+[node name="charlieSeven" type="AnimatedSprite" parent="Interface"]
+position = Vector2( 513.355, 272.611 )
+frames = SubResource( 7 )
+animation = "null"
+playing = true
+
 [node name="skullParticles" type="Particles2D" parent="Interface"]
 position = Vector2( 512, 280 )
 scale = Vector2( 0.5, 0.5 )
@@ -338,6 +354,11 @@ speed_scale = 7.0
 randomness = 1.0
 process_material = SubResource( 5 )
 texture = ExtResource( 4 )
+
+[node name="Heart" type="Sprite" parent="Interface"]
+position = Vector2( 32, 32.13 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 8 )
 
 [node name="blackJack" type="AnimatedSprite" parent="Interface"]
 visible = false
@@ -376,16 +397,10 @@ __meta__ = {
 [node name="timerBJ" type="Timer" parent="Interface/blackJack"]
 wait_time = 0.35
 
-[node name="charlieSeven" type="AnimatedSprite" parent="Interface"]
-position = Vector2( 513.355, 272.611 )
-frames = SubResource( 7 )
-animation = "null"
-playing = true
-
 [connection signal="animation_finished" from="Interface/AnimationPlayer" to="Interface" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Interface/deckButton" to="Interface" method="_on_deckButton_pressed"]
 [connection signal="pressed" from="Interface/discardButton" to="Interface" method="_on_discardButton_pressed"]
 [connection signal="pressed" from="Interface/endTurnButton" to="Interface" method="_on_endTurnButton_pressed"]
 [connection signal="timeout" from="Interface/timerHand" to="Interface" method="_on_timerHand_timeout"]
-[connection signal="timeout" from="Interface/blackJack/timerBJ" to="Interface" method="_on_timerBJ_timeout"]
 [connection signal="animation_finished" from="Interface/charlieSeven" to="Interface" method="_on_charlieSeven_animation_finished"]
+[connection signal="timeout" from="Interface/blackJack/timerBJ" to="Interface" method="_on_timerBJ_timeout"]
