@@ -140,7 +140,8 @@ func gameOver():
 	get_tree().change_scene("res://Scenes/GameOver.tscn")
 
 func handUpTo21():
-	drawingCard = true
+	if !deck.empty(): 
+		drawingCard = true
 	endTurn()
 	var damage = handValue - 21
 	takeDamage(damage)
