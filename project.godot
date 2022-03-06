@@ -52,6 +52,7 @@ config/icon="res://Assects/icons/CoB_logo.png"
 
 GameManager="*res://Scripts/GameManager.gd"
 EnemiesSingelton="*res://Scripts/EnemiesSingelton.gd"
+WorldSingelton="*res://Scripts/WorldSingelton.gd"
 
 [display]
 
