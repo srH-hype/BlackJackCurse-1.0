@@ -162,7 +162,7 @@ cell_size = Vector2( 96, 96 )
 format = 1
 
 [node name="protoplayer" type="Sprite" parent="GameWorld"]
-position = Vector2( 480, 288 )
+position = Vector2( 1536, 288 )
 texture = ExtResource( 1 )
 centered = false
 
