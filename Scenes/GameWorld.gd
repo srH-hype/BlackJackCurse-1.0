@@ -10,6 +10,8 @@ const LEVEL_SIZES = [
 	Vector2(50, 50),
 ]
 
+var player_tile
+
 const LEVEL_ROOM_COUNTS = [5, 7, 9, 12, 15]
 const MIN_ROOM_DIMENSION = 5
 const MAX_ROOM_DIMENSION = 8
@@ -22,8 +24,6 @@ var level_num = 0
 var map = []
 var rooms = []
 var level_size
-
-var player_tile
 
 func _ready():
 	randomize()
@@ -50,6 +50,49 @@ func build_level():
 			break
 	
 	connect_rooms()
+	
+	var start_room = rooms.front()
+	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x - 2)
+	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y - 2)
+	player_tile = Vector2(player_x, player_y)
+	movePlayer()
+	
+	
+ 
+func movePlayer():
+	$player.position = player_tile * TILE_SIZE
+
+func endTurn():
+	GameManager.endTurn()
+	movePlayer()
+
+func _input(event):
+	if event.is_pressed():
+		return
+	
+	if event.is_action("Left"):
+		try_move(-1,0)
+	elif event.is_action("Right"):
+		try_move(1,0)
+	elif event.is_action("Up"):
+		try_move(0,-1)
+	elif event.is_action("Down"):
+		try_move(0,1)
+	
+
+func try_move(dx, dy):
+	var x = player_tile.x + dx 
+	var y = player_tile.y + dy
+	
+	var tile_type = Tile.wall
+	if x >= 0 && x < level_size.x && y >= 0 && y < level_size.y:
+		tile_type = map[x][y]
+	
+	match tile_type:
+		Tile.way:
+			player_tile = Vector2(x,y)
+	
+	endTurn()
 
 func connect_rooms():
 	# Build an AStar graph of the area where we can add corridors
