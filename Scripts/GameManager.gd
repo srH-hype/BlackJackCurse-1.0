@@ -10,29 +10,30 @@ var life = 21
 var discardDeck = Array()
 var hand = Array()
 var timerGameOver = Timer.new()
-var timerWait = Timer.new()
+var timerTurn = Timer.new()
 var drawingCard = false
+var enemyTurn = false
 signal drawSignal
 signal discardSignal
 signal cardAudioSignal
 signal reShuffleSignal
 signal resetHandSignal
-signal waitSignal
-signal endWaitSignal
 signal endTurnSignal
+signal newTurnSignal
 signal blackJackSignal
 signal charlieSevenSignal
 signal lifeBarSignal
 signal gameOverAudio
 signal invalidCardAudio
+signal cardFireSignal
 
 func _ready():
 	timerGameOver.connect("timeout",self,"gameOver")
 	timerGameOver.set_one_shot(true)
-	timerWait.connect("timeout", self, "endWait")
-	timerWait.set_one_shot(true)
+	timerTurn.connect("timeout", self, "newTurn")
+	timerTurn.set_one_shot(true)
+	add_child(timerTurn)
 	add_child(timerGameOver)
-	add_child(timerWait)
 	fillDeck()
 	randomize()
 	deck.shuffle()
@@ -61,7 +62,7 @@ func fillDiscardDeck():
 		discardDeck.append(SmallCard.new(hand[n].suit,hand[n].value))
 
 func drawCard():
-	waitAndTimer()
+	endTurn()
 	if !deck.empty():
 		newCard = deck[0]
 		countAs(deck[0].value)
@@ -104,8 +105,13 @@ func updateCard(value):
 			else:
 				handValue += 10 
 	else:
-		if (value <=-1 && value >= -10):
-			handValue += value
+		if handValue + value == 11 && asInHand !=0:
+			handValue = 21
+		elif (value <=-1 && value >= -10):
+			if value == 1 && handValue + 11 <= 21:
+				handValue -= 11
+			else:
+				handValue += value
 		else:
 			handValue += -10
 
@@ -126,13 +132,11 @@ func checkHand():
 func charlieSeven():
 	print("Charlie Seven")
 	life = 21
-	endTurn()
 	emit_signal("charlieSevenSignal")
 
 func blackJack():
 	print("BlackJack")
 	life = 21
-	endTurn()
 	fillDiscardDeck()
 	emit_signal("blackJackSignal")
 
@@ -142,7 +146,6 @@ func gameOver():
 func handUpTo21():
 	if !deck.empty(): 
 		drawingCard = true
-	endTurn()
 	var damage = handValue - 21
 	takeDamage(damage)
 	fillDiscardDeck()
@@ -171,11 +174,25 @@ func resetHand():
 	handValue = 0 
 
 func cardPressed(var c):
-	if c.suit == 1 or c.suit == 4:
-		if life < 21:
-			healing(cardValue(c.value))
+	if enemyTurn == false:
+		if c.suit == 1 or c.suit == 4:
+			if life < 21:
+				healing(cardValue(c.value))
+				endTurn()
+				emit_signal("cardAudioSignal")
+				updateCard(-c.value)
+				hand.erase(c)
+				c.queue_free()
+				discardDeck.append(SmallCard.new(c.suit,c.value))
+				if (hand.empty()):
+					emit_signal("drawSignal")
+				emit_signal("discardSignal")
+			else:
+				emit_signal("invalidCardAudio")
+		else:
+			emit_signal("cardFireSignal")
+			print(cardValue(c.value), " Damage")
 			endTurn()
-			waitAndTimer()
 			emit_signal("cardAudioSignal")
 			updateCard(-c.value)
 			hand.erase(c)
@@ -184,34 +201,18 @@ func cardPressed(var c):
 			if (hand.empty()):
 				emit_signal("drawSignal")
 			emit_signal("discardSignal")
-		else:
-			emit_signal("invalidCardAudio")
-	else:
-		print(cardValue(c.value), " Damage")
-		endTurn()
-		waitAndTimer()
-		emit_signal("cardAudioSignal")
-		updateCard(-c.value)
-		hand.erase(c)
-		c.queue_free()
-		discardDeck.append(SmallCard.new(c.suit,c.value))
-		if (hand.empty()):
-			emit_signal("drawSignal")
-		emit_signal("discardSignal")
-
-func wait():
-	emit_signal("waitSignal")
-
-func endWait():
-	drawingCard = false
-	emit_signal("endWaitSignal")
+		checkHand()
+		print(handValue)
 
 func endTurn():
+	enemyTurn = true
+	timerTurn.start(1.4)
 	emit_signal("endTurnSignal")
 
-func waitAndTimer():
-	wait()
-	timerWait.start(0.7)
+func newTurn():
+	drawingCard = false
+	enemyTurn = false
+	emit_signal("newTurnSignal")
 
 func resectGame():
 	resetHand()

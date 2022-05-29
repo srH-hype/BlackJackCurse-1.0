@@ -72,12 +72,16 @@ func _input(event):
 	
 	if event.is_action("Left"):
 		try_move(-1,0)
+		$player.move()
 	elif event.is_action("Right"):
 		try_move(1,0)
+		$player.move()
 	elif event.is_action("Up"):
 		try_move(0,-1)
+		$player.move()
 	elif event.is_action("Down"):
 		try_move(0,1)
+		$player.move()
 	
 
 func try_move(dx, dy):
@@ -288,3 +292,8 @@ func cut_regions(free_regions, region_to_remove):
 func set_tile(x, y, type):
 	map[x][y] = type
 	tile_map.set_cell(x, y, type)
+
+
+
+
+

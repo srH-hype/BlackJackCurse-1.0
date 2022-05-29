@@ -10,14 +10,13 @@ func _ready():
 	GameManager.connect("cardAudioSignal", self, "playCardAudioSignal")
 	GameManager.connect("reShuffleSignal", self,"reShuffle")
 	GameManager.connect("resetHandSignal", self, "startTimerHand")
-	GameManager.connect("waitSignal", self,"wait")
-	GameManager.connect("endWaitSignal", self, "endWait")
-	GameManager.connect("endTurnSignal", self, "endTurnAnimation")
+	GameManager.connect("endTurnSignal", self, "endTurn")
 	GameManager.connect("blackJackSignal", self, "blackJack")
 	GameManager.connect("charlieSevenSignal", self, "charlieSeven")
 	GameManager.connect("lifeBarSignal", self, "updateLifeBar")
 	GameManager.connect("gameOverAudio", self, "playGameOVerAudio")
 	GameManager.connect("invalidCardAudio", self, "playInvalidCardAudio")
+	GameManager.connect("newTurnSignal", self, "newTurn")
 	drawCard()
 
 func _on_deckButton_pressed():
@@ -31,9 +30,11 @@ func _on_discardButton_pressed():
 	else:
 		$discardHand.visible = false
 
-func _on_AnimationPlayer_animation_finished(draw):
-	$hand.add_child(GameManager.newCard)
-	updateHand()
+func _on_AnimationPlayer_animation_finished(name):
+	if (name == "draw"):
+		$hand.add_child(GameManager.newCard)
+		updateHand()
+
 
 func updateHand():
 	updateLifeBar()
@@ -45,15 +46,13 @@ func updateLifeBar():
 func startTimerHand():
 		$timerHand.start()
 
-func wait():
-	$deckButton.disabled = true
-
-func endWait():
+func newTurn():
 	$deckButton.disabled = false
 
 func endTurn():
+	$deckButton.disabled = true
 	endTurnAnimation()
-	endWait()
+	print("end turn")
 
 func _on_timerHand_timeout():
 	GameManager.resetHand()
@@ -74,7 +73,6 @@ func drawCard():
 	$drawAudio.play()
 	GameManager.drawCard()
 	$AnimationPlayer.play("draw")
-	wait()
 
 func reShuffle():
 	$deckButton/Particles2D.emitting = true
@@ -102,7 +100,7 @@ func charlieSeven():
 	$charlie7Audio.play()
 
 func endTurnAnimation():
-	$AnimationInterface.play("endTurn")
+	$AnimationPlayer.play("endTurn")
 
 func _on_timerBJ_timeout():
 	countBlackJack += 1
@@ -125,3 +123,5 @@ func playInvalidCardAudio():
 
 func _on_charlieSeven_animation_finished():
 	$charlieSeven.play("null")
+
+

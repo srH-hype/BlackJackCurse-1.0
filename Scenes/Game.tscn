@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Assects/sprites/spritesheetJack.png" type="Texture" id=1]
 [ext_resource path="res://Assects/icons/endTurnLogo.png" type="Texture" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://Scenes/GameWorld.gd" type="Script" id=34]
 [ext_resource path="res://Assects/sprites/way.png" type="Texture" id=35]
 [ext_resource path="res://Scenes/player.gd" type="Script" id=36]
+[ext_resource path="res://Assects/sprites/spritesheetCardFire.png" type="Texture" id=37]
 
 [sub_resource type="TileSet" id=8]
 0/name = "wall.jpg 0"
@@ -67,20 +68,74 @@
 1/shapes = [  ]
 1/z_index = 0
 
-[sub_resource type="Animation" id=6]
-resource_name = "endTurn"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("../endTurnButton:rect_rotation")
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "cardFire"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 1, 2, 0, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 360.0 ]
+"values": [ 0.0, -60.0, -120.0, -180.0, -240.0, -300.0, -360.0 ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "move"
+length = 0.6
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.5 )
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../GameWorld/player/Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -60.0 ]
 }
 
 [sub_resource type="Animation" id=1]
@@ -99,6 +154,21 @@ tracks/0/keys = {
 "values": [ Vector2( 29.333, 28 ), Vector2( 29.333, 24 ), Vector2( 29.333, 20 ), Vector2( 29.333, 16 ), Vector2( 29.333, 27.6768 ) ]
 }
 
+[sub_resource type="Animation" id=11]
+resource_name = "endTurn"
+tracks/0/type = "value"
+tracks/0/path = NodePath("endTurnButton:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
 [sub_resource type="ParticlesMaterial" id=2]
 emission_shape = 2
 emission_box_extents = Vector3( 7, 7, 1 )
@@ -109,22 +179,21 @@ orbit_velocity_random = 0.0
 
 [sub_resource type="SpriteFrames" id=7]
 animations = [ {
-"frames": [ ExtResource( 22 ), ExtResource( 23 ), ExtResource( 28 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 21 ) ],
-"loop": false,
-"name": "seven",
-"speed": 14.0
-}, {
 "frames": [  ],
 "loop": true,
 "name": "null",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 22 ), ExtResource( 23 ), ExtResource( 28 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 21 ) ],
+"loop": false,
+"name": "seven",
+"speed": 14.0
 } ]
 
 [sub_resource type="ParticlesMaterial" id=5]
 lifetime_randomness = 1.0
 emission_shape = 1
 emission_sphere_radius = 128.0
-emission_ring_axis = Vector3( 700, 700, 0 )
 flag_disable_z = true
 direction = Vector3( 7, 7, 0 )
 spread = 180.0
@@ -164,6 +233,7 @@ format = 1
 
 [node name="player" type="Sprite" parent="GameWorld"]
 position = Vector2( 1536, 288 )
+rotation = 0.000751915
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
 centered = false
@@ -179,16 +249,29 @@ drag_margin_top = 0.0
 drag_margin_right = 0.0
 drag_margin_bottom = 0.0
 
+[node name="Sprite" type="Sprite" parent="GameWorld/player"]
+visible = false
+position = Vector2( 500.464, 506.878 )
+rotation = -1.0472
+scale = Vector2( 10, 10 )
+texture = ExtResource( 37 )
+offset = Vector2( 70, 70 )
+hframes = 2
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameWorld/player"]
+anims/RESET = SubResource( 12 )
+anims/cardFire = SubResource( 10 )
+anims/move = SubResource( 13 )
+
 [node name="Interface" type="CanvasLayer" parent="."]
 pause_mode = 1
 script = ExtResource( 5 )
 
-[node name="AnimationInterface" type="AnimationPlayer" parent="Interface"]
-root_node = NodePath("../AnimationPlayer")
-anims/endTurn = SubResource( 6 )
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Interface"]
+anims/RESET = SubResource( 9 )
 anims/draw = SubResource( 1 )
+anims/endTurn = SubResource( 11 )
 
 [node name="handBackground" type="ColorRect" parent="Interface"]
 anchor_right = 1.0
@@ -241,12 +324,9 @@ margin_right = 180.0
 margin_bottom = 642.0
 rect_scale = Vector2( 1.5, 1.5 )
 texture_normal = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="deck" type="Sprite" parent="Interface/deckButton"]
-position = Vector2( 29.333, 28 )
+position = Vector2( 29.333, 27.6768 )
 texture = ExtResource( 3 )
 
 [node name="Particles2D" type="Particles2D" parent="Interface/deckButton"]
@@ -291,6 +371,7 @@ margin_left = 54.6489
 margin_top = 606.271
 margin_right = 86.6489
 margin_bottom = 638.271
+rect_rotation = 360.0
 rect_scale = Vector2( 2, 2 )
 rect_pivot_offset = Vector2( 16, 16 )
 texture_normal = ExtResource( 2 )
@@ -450,6 +531,7 @@ __meta__ = {
 [node name="timerBJ" type="Timer" parent="Interface/blackJack"]
 wait_time = 0.35
 
+[connection signal="animation_finished" from="GameWorld/player/AnimationPlayer" to="GameWorld/player" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="Interface/AnimationPlayer" to="Interface" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Interface/deckButton" to="Interface" method="_on_deckButton_pressed"]
 [connection signal="pressed" from="Interface/discardButton" to="Interface" method="_on_discardButton_pressed"]
