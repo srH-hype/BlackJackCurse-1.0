@@ -6,12 +6,13 @@ func _ready():
 
 func cardFire():
 	$Sprite.visible = true
-	$AnimationPlayer.play("cardFire")
+	$AnimationCardFire.play("cardFire")
+	$AnimationPlayer.play("attack")
 
 func move():
 	$AnimationPlayer.play("move")
 
 
-func _on_AnimationPlayer_animation_finished(name):
+func _on_AnimationCardFire_animation_finished(name):
 	if name == "cardFire":
 		$Sprite.visible = false

@@ -48,6 +48,7 @@ func startTimerHand():
 
 func newTurn():
 	$deckButton.disabled = false
+	$endTurnButton.disabled = false
 
 func endTurn():
 	$deckButton.disabled = true
@@ -84,6 +85,7 @@ func reShuffle():
 		n.queue_free()
 
 func _on_endTurnButton_pressed():
+	$endTurnButton.disabled = true
 	GameManager.endTurn()
 
 func blackJack():
@@ -100,7 +102,7 @@ func charlieSeven():
 	$charlie7Audio.play()
 
 func endTurnAnimation():
-	$AnimationPlayer.play("endTurn")
+	$AnimationEndTurn.play("endTurn")
 
 func _on_timerBJ_timeout():
 	countBlackJack += 1
