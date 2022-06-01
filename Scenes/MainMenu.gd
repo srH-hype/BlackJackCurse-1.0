@@ -10,4 +10,5 @@ func _ready():
 
 
 func _on_Button_pressed():
+	GameManager.resectGame()
 	get_tree().change_scene("res://Scenes/Game.tscn")

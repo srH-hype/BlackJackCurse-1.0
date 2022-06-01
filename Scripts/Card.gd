@@ -8,8 +8,9 @@ var face
 var back
 
 func _ready():
-	GameManager.connect("waitSignal", self, "wait")
-	GameManager.connect("endWaitSignal", self, "endWait")
+	GameManager.connect("endTurnSignal", self, "endTurn")
+	GameManager.connect("newTurnSignal", self, "newTurn")
+	disabled = true
 
 func _init(var s, var v):
 	value = v
@@ -23,15 +24,15 @@ func _init(var s, var v):
 		set_pressed_texture(load("res://Assects/cards/card_attack.png"))
 	set_scale(Vector2(2,2))
 
-
-func _pressed():
-	GameManager.cardPressed(self)
-
-func wait():
-	disabled = true
-
-func endWait():
+func newTurn():
 	if suit == 1 || suit == 4:
 		if GameManager.life == 21:
 			set_pressed_texture(load("res://Assects/cards/card_NoHeal.png"))
 	disabled = false
+
+func _pressed():
+	GameManager.cardPressed(self)
+
+func endTurn():
+	disabled = true
+

@@ -214,15 +214,15 @@ orbit_velocity_random = 0.0
 
 [sub_resource type="SpriteFrames" id=7]
 animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "null",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 22 ), ExtResource( 23 ), ExtResource( 28 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 21 ) ],
 "loop": false,
 "name": "seven",
 "speed": 14.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "null",
+"speed": 5.0
 } ]
 
 [sub_resource type="ParticlesMaterial" id=5]
