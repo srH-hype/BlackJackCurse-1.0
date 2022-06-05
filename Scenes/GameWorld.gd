@@ -1,6 +1,7 @@
 extends Node2D
 
 const TILE_SIZE = 96
+const ENEMY = preload("res://Scenes/protoEnemy.tscn")
 
 const LEVEL_SIZES = [
 	Vector2(30, 30),
@@ -17,6 +18,8 @@ const MIN_ROOM_DIMENSION = 5
 const MAX_ROOM_DIMENSION = 8
 
 enum Tile{wall, way}
+
+var enemies = []
 
 onready var tile_map = $TileMap
 
@@ -35,6 +38,11 @@ func build_level():
 	map.clear()
 	tile_map.clear()
 	
+	for enemy in enemies:
+		enemy.remove()
+	enemies.clear()
+	
+	
 	level_size = LEVEL_SIZES[level_num]
 	for x in range(level_size.x):
 		map.append([])
@@ -51,13 +59,33 @@ func build_level():
 	
 	connect_rooms()
 	
+	
 	var start_room = rooms.front()
 	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x - 2)
 	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y - 2)
 	player_tile = Vector2(player_x, player_y)
 	movePlayer()
 	
+	#Enemies
+	var num_enemies = 21
 	
+	for i in range(num_enemies):
+		var room = rooms[1 + randi() % (rooms.size() - 1)]
+		var x = room.position.x + 1 + randi() % int(room.size.x - 2)
+		var y = room.position.y + 1 + randi() % int(room.size.y - 2)
+		
+		var blocked = false
+		for enemy in enemies:
+			if enemy.tile.x == x && enemy.tile.y == y:
+				blocked = true
+				break
+			
+		if !blocked:
+			var newEnemy = ENEMY.instance()
+			newEnemy.create(EnemiesSingelton.enemyDefault,x,y)
+			newEnemy.position = newEnemy.tile * TILE_SIZE
+			add_child(newEnemy)
+			enemies.append(newEnemy)
  
 func movePlayer():
 	$player.position = player_tile * TILE_SIZE
@@ -99,6 +127,7 @@ func try_move(dx, dy):
 	
 	endTurn()
 
+#Connecting the rooms together.
 func connect_rooms():
 	# Build an AStar graph of the area where we can add corridors
 	
@@ -183,6 +212,7 @@ func get_nearest_unconnected_point(graph, target_point):
 			
 	return tied_for_nearest[randi() % tied_for_nearest.size()]
 
+#Connecting the rooms together.
 func add_random_connection(stone_graph, room_graph):
 	var start_room_id = get_least_connected_point(room_graph)
 	var end_room_id = get_nearest_unconnected_point(room_graph, start_room_id)

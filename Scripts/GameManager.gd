@@ -27,6 +27,7 @@ signal gameOverAudio
 signal invalidCardAudio
 signal cardFireSignal
 
+#Initializing the game.
 func _ready():
 	timerGameOver.connect("timeout",self,"gameOver")
 	timerGameOver.set_one_shot(true)
@@ -92,6 +93,11 @@ func countAs(value):
 	if value == -1 :
 		asInHand -= 1
 
+#This function is updating the hand value. It is checking if the card is an Ace, a face card or a number card.
+#If it is an Ace, it checks if the hand value is 10. If it is, it adds 21 to the hand value. If it is not, it adds 11 to the hand value.
+#If it is a face card, it adds 10 to the hand value. If it is a number card, it adds the value of the card to the hand value.
+#If the card is a negative number, it checks if the hand value is 10. If it is, it subtracts 21 from the hand value.
+#If it is not, it subtracts the value of the card from the hand value.
 func updateCard(value):
 	if (value > 0):
 		if (value >=1 && value <= 10):
@@ -173,6 +179,10 @@ func resetHand():
 	hand.clear()
 	handValue = 0 
 
+#This function is called when a card is pressed. It checks if it is the player's turn 
+#and if the card is a heart or a diamond. If it is, it checks if the player's life is less than 21.
+#If it is, it heals the player and ends the turn. If it is not, it plays an invalid card sound. 
+#If the card is not a heart or a diamond, it deals damage to the enemy and ends the turn.
 func cardPressed(var c):
 	if enemyTurn == false:
 		if c.suit == 1 or c.suit == 4:
@@ -206,7 +216,7 @@ func cardPressed(var c):
 
 func endTurn():
 	enemyTurn = true
-	timerTurn.start(1.4)
+	timerTurn.start(1)
 	emit_signal("endTurnSignal")
 
 func newTurn():
