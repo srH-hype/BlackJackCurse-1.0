@@ -53,6 +53,7 @@ func newTurn():
 func endTurn():
 	$deckButton.disabled = true
 	endTurnAnimation()
+	updateLifeBar()
 	print("end turn")
 
 func _on_timerHand_timeout():

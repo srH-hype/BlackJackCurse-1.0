@@ -3,6 +3,7 @@ extends Sprite
 
 func _ready():
 	GameManager.connect("cardFireSignal", self, "cardFire")
+	GameManager.connect("takeDamegeSignal", self, "damage")
 
 func cardFire():
 	$Sprite.visible = true
@@ -12,6 +13,8 @@ func cardFire():
 func move():
 	$AnimationPlayer.play("move")
 
+func damage():
+	$AnimationPlayer.play("damage")
 
 func _on_AnimationCardFire_animation_finished(name):
 	if name == "cardFire":

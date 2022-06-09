@@ -26,6 +26,7 @@ signal lifeBarSignal
 signal gameOverAudio
 signal invalidCardAudio
 signal cardFireSignal
+signal takeDamegeSignal
 
 #Initializing the game.
 func _ready():
@@ -138,6 +139,7 @@ func checkHand():
 func charlieSeven():
 	print("Charlie Seven")
 	life = 21
+	fillDiscardDeck()
 	emit_signal("charlieSevenSignal")
 
 func blackJack():
@@ -159,6 +161,7 @@ func handUpTo21():
 
 func takeDamage(damage):
 	life = life - damage
+	emit_signal("takeDamegeSignal")
 
 func checkLife():
 	checkHand()

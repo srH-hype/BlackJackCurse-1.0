@@ -20,6 +20,7 @@ const MAX_ROOM_DIMENSION = 8
 enum Tile{wall, way}
 
 var enemies = []
+var enemy_pathfinding
 
 onready var tile_map = $TileMap
 
@@ -31,6 +32,7 @@ var level_size
 func _ready():
 	randomize()
 	build_level()
+	GameManager.connect("endTurnSignal", self, "endTurnSig")
 
 func build_level():
 	
@@ -42,6 +44,7 @@ func build_level():
 		enemy.remove()
 	enemies.clear()
 	
+	enemy_pathfinding = AStar2D.new()
 	
 	level_size = LEVEL_SIZES[level_num]
 	for x in range(level_size.x):
@@ -86,13 +89,31 @@ func build_level():
 			newEnemy.position = newEnemy.tile * TILE_SIZE
 			add_child(newEnemy)
 			enemies.append(newEnemy)
- 
+
+func clear_path(tile):
+	var new_point = enemy_pathfinding.get_available_point_id()
+	enemy_pathfinding.add_point(new_point, Vector2(tile.x, tile.y))
+	var points_to_connect = []
+	
+	if tile.x > 0 && map[tile.x - 1][tile.y] == Tile.way:
+		points_to_connect.append(enemy_pathfinding.get_closest_point(Vector2(tile.x - 1, tile.y)))
+	if tile.y > 0 && map[tile.x][tile.y - 1] == Tile.way:
+		points_to_connect.append(enemy_pathfinding.get_closest_point(Vector2(tile.x, tile.y - 1)))
+	if tile.x < level_size.x - 1 && map[tile.x + 1][tile.y] == Tile.way:
+		points_to_connect.append(enemy_pathfinding.get_closest_point(Vector2(tile.x + 1, tile.y)))
+	if tile.y < level_size.y - 1 && map[tile.x][tile.y + 1] == Tile.way:
+		points_to_connect.append(enemy_pathfinding.get_closest_point(Vector2(tile.x, tile.y + 1)))
+		
+	for point in points_to_connect:
+		enemy_pathfinding.connect_points(point, new_point)
+
 func movePlayer():
 	$player.position = player_tile * TILE_SIZE
 
 func endTurn():
 	GameManager.endTurn()
 	movePlayer()
+	
 
 func _input(event):
 	if GameManager.enemyTurn == false:
@@ -123,7 +144,14 @@ func try_move(dx, dy):
 	
 	match tile_type:
 		Tile.way:
-			player_tile = Vector2(x,y)
+			var blocked = false
+			for enemy in enemies:
+				if  enemy.tile.x == x && enemy.tile.y == y:
+					GameManager.takeDamage(1)
+					blocked = true
+					break
+			if !blocked:
+				player_tile = Vector2(x,y)
 	
 	endTurn()
 
@@ -131,30 +159,30 @@ func try_move(dx, dy):
 func connect_rooms():
 	# Build an AStar graph of the area where we can add corridors
 	
-	var stone_graph = AStar.new()
+	var stone_graph = AStar2D.new()
 	var point_id = 0
 	for x in range(level_size.x):
 		for y in range(level_size.y):
 			if map[x][y] == Tile.wall:
-				stone_graph.add_point(point_id, Vector3(x, y, 0))
+				stone_graph.add_point(point_id, Vector2(x, y))
 				
 				# Connect to left if also stone
 				if x > 0 && map[x - 1][y] == Tile.wall:
-					var left_point = stone_graph.get_closest_point(Vector3(x - 1, y, 0))
+					var left_point = stone_graph.get_closest_point(Vector2(x - 1, y))
 					stone_graph.connect_points(point_id, left_point)
 					
 				# Connect to above if also stone
 				if y > 0 && map[x][y - 1] == Tile.wall:
-					var above_point = stone_graph.get_closest_point(Vector3(x, y - 1, 0))
+					var above_point = stone_graph.get_closest_point(Vector2(x, y - 1))
 					stone_graph.connect_points(point_id, above_point)
 					
 				point_id += 1
 	
-	var room_graph = AStar.new()
+	var room_graph = AStar2D.new()
 	point_id = 0
 	for room in rooms:
 		var room_center = room.position + room.size / 2
-		room_graph.add_point(point_id, Vector3(room_center.x, room_center.y , 0))
+		room_graph.add_point(point_id, Vector2(room_center.x, room_center.y))
 		point_id += 1
 	
 	# Add random connections until everything is connected
@@ -242,14 +270,14 @@ func pick_random_door_location(room):
 	# Top and bottom walls
 	
 	for x in range(room.position.x + 1, room.end.x - 2):
-		options.append(Vector3(x, room.position.y, 0))
-		options.append(Vector3(x, room.end.y - 1, 0))
+		options.append(Vector2(x, room.position.y))
+		options.append(Vector2(x, room.end.y - 1))
 			
 	# Left and right walls
 	
 	for y in range(room.position.y + 1, room.end.y - 2):
-		options.append(Vector3(room.position.x, y, 0))
-		options.append(Vector3(room.end.x - 1, y, 0))
+		options.append(Vector2(room.position.x, y))
+		options.append(Vector2(room.end.x - 1, y))
 			
 	return options[randi() % options.size()]
 
@@ -320,11 +348,37 @@ func cut_regions(free_regions, region_to_remove):
 	for region in addition_queue:
 		free_regions.append(region)
 
+func act(enemy):
+	var my_point = enemy_pathfinding.get_closest_point(Vector2(enemy.tile.x, enemy.tile.y))
+	var player_point = enemy_pathfinding.get_closest_point(Vector2(player_tile.x, player_tile.y))
+	var path = enemy_pathfinding.get_point_path(my_point, player_point)
+	if path:
+		assert(path.size() > 1)
+		var move_tile = Vector2(path[1].x, path[1].y)
+		
+		if move_tile == player_tile:
+			GameManager.takeDamage(enemy.attack)
+		else:
+			var blocked = false
+			for enemy in enemies:
+				if enemy.tile == move_tile:
+					blocked = true
+					break
+			
+			if !blocked:
+				enemy.tile = move_tile
+	enemy.position = enemy.tile * TILE_SIZE
+
 func set_tile(x, y, type):
 	map[x][y] = type
 	tile_map.set_cell(x, y, type)
+	
+	if type == Tile.way:
+		clear_path(Vector2(x,y))
 
-
+func endTurnSig():
+	for enemy in enemies:
+		act(enemy)
 
 
 
