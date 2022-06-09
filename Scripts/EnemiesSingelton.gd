@@ -1,5 +1,7 @@
 extends Node
 
+signal signalRemove(enemy)
+
 var enemyDefault = {
 	"hp" : 1,
 	"attack" : 1,
@@ -7,3 +9,5 @@ var enemyDefault = {
 	"boss" : false
 }
 
+func remove(enemy):
+	emit_signal("signalRemove",enemy)

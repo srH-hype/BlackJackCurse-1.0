@@ -33,6 +33,8 @@ func _ready():
 	randomize()
 	build_level()
 	GameManager.connect("endTurnSignal", self, "endTurnSig")
+	GameManager.connect("cardFireSignal", self,"cardFire")
+	EnemiesSingelton.connect("signalRemove",self, "removeEnemy")
 
 func build_level():
 	
@@ -87,7 +89,7 @@ func build_level():
 			var newEnemy = ENEMY.instance()
 			newEnemy.create(EnemiesSingelton.enemyDefault,x,y)
 			newEnemy.position = newEnemy.tile * TILE_SIZE
-			add_child(newEnemy)
+			$enemies.add_child(newEnemy)
 			enemies.append(newEnemy)
 
 func clear_path(tile):
@@ -380,5 +382,23 @@ func endTurnSig():
 	for enemy in enemies:
 		act(enemy)
 
+func cardFire(value):
+	print("Damage" +" "+ String(value))
+	var tilesAround = []
+	
+	tilesAround.append(Vector2(player_tile.x+1,player_tile.y))
+	tilesAround.append(Vector2(player_tile.x,player_tile.y+1))
+	tilesAround.append(Vector2(player_tile.x-1,player_tile.y))
+	tilesAround.append(Vector2(player_tile.x,player_tile.y-1))
+	tilesAround.append(Vector2(player_tile.x+1,player_tile.y+1))
+	tilesAround.append(Vector2(player_tile.x-1,player_tile.y-1))
+	tilesAround.append(Vector2(player_tile.x+1,player_tile.y-1))
+	tilesAround.append(Vector2(player_tile.x-1,player_tile.y+1))
+	
+	for enemy in enemies:
+		if tilesAround.has(enemy.tile):
+			enemy.takeDamage(value)
 
-
+func removeEnemy(enemy):
+	enemies.erase(enemy)
+	$enemies.remove_child(enemy)

@@ -34,4 +34,4 @@ func takeDamage(damage):
 	
 
 func remove():
-	queue_free()
+	EnemiesSingelton.remove(self)

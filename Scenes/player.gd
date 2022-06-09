@@ -5,7 +5,7 @@ func _ready():
 	GameManager.connect("cardFireSignal", self, "cardFire")
 	GameManager.connect("takeDamegeSignal", self, "damage")
 
-func cardFire():
+func cardFire(value):
 	$Sprite.visible = true
 	$AnimationCardFire.play("cardFire")
 	$AnimationPlayer.play("attack")

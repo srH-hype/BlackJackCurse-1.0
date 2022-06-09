@@ -25,7 +25,7 @@ signal charlieSevenSignal
 signal lifeBarSignal
 signal gameOverAudio
 signal invalidCardAudio
-signal cardFireSignal
+signal cardFireSignal(value)
 signal takeDamegeSignal
 
 #Initializing the game.
@@ -203,8 +203,7 @@ func cardPressed(var c):
 			else:
 				emit_signal("invalidCardAudio")
 		else:
-			emit_signal("cardFireSignal")
-			print(cardValue(c.value), " Damage")
+			emit_signal("cardFireSignal",cardValue(c.value))
 			endTurn()
 			emit_signal("cardAudioSignal")
 			updateCard(-c.value)
