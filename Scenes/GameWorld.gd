@@ -115,7 +115,6 @@ func movePlayer():
 func endTurn():
 	GameManager.endTurn()
 	movePlayer()
-	
 
 func _input(event):
 	if GameManager.enemyTurn == false:
@@ -149,7 +148,7 @@ func try_move(dx, dy):
 			var blocked = false
 			for enemy in enemies:
 				if  enemy.tile.x == x && enemy.tile.y == y:
-					GameManager.takeDamage(1)
+					GameManager.takeDamage(enemy.attack)
 					blocked = true
 					break
 			if !blocked:
@@ -351,6 +350,7 @@ func cut_regions(free_regions, region_to_remove):
 		free_regions.append(region)
 
 func act(enemy):
+	enemy.move()
 	var my_point = enemy_pathfinding.get_closest_point(Vector2(enemy.tile.x, enemy.tile.y))
 	var player_point = enemy_pathfinding.get_closest_point(Vector2(player_tile.x, player_tile.y))
 	var path = enemy_pathfinding.get_point_path(my_point, player_point)
@@ -359,7 +359,7 @@ func act(enemy):
 		var move_tile = Vector2(path[1].x, path[1].y)
 		
 		if move_tile == player_tile:
-			GameManager.takeDamage(enemy.attack)
+			enemy.attackFrame()
 		else:
 			var blocked = false
 			for enemy in enemies:
@@ -370,6 +370,7 @@ func act(enemy):
 			if !blocked:
 				enemy.tile = move_tile
 	enemy.position = enemy.tile * TILE_SIZE
+	
 
 func set_tile(x, y, type):
 	map[x][y] = type

@@ -105,4 +105,3 @@ __meta__ = {
 }
 
 [connection signal="pressed" from="CenterContainer/Panel/ColorRect/ButtonPlay" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="CenterContainer/Panel/ColorRect/ButtonExit" to="." method="_on_Button_pressed"]

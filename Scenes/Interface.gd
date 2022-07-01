@@ -20,7 +20,8 @@ func _ready():
 	drawCard()
 
 func _on_deckButton_pressed():
-	drawCard()
+	if GameManager.enemyTurn == false:
+		drawCard()
 
 func _on_discardButton_pressed():
 	$discardAudio.play()

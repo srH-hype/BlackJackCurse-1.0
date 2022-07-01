@@ -11,6 +11,7 @@ var discardDeck = Array()
 var hand = Array()
 var timerGameOver = Timer.new()
 var timerTurn = Timer.new()
+var timerPlayerAction = Timer.new()
 var drawingCard = false
 var enemyTurn = false
 signal drawSignal
@@ -34,8 +35,11 @@ func _ready():
 	timerGameOver.set_one_shot(true)
 	timerTurn.connect("timeout", self, "newTurn")
 	timerTurn.set_one_shot(true)
+	timerPlayerAction.connect("timeout",self,"endAnimationTimer")
+	timerPlayerAction.set_one_shot(true)
 	add_child(timerTurn)
 	add_child(timerGameOver)
+	add_child(timerPlayerAction)
 	fillDeck()
 	randomize()
 	deck.shuffle()
@@ -64,7 +68,6 @@ func fillDiscardDeck():
 		discardDeck.append(SmallCard.new(hand[n].suit,hand[n].value))
 
 func drawCard():
-	endTurn()
 	if !deck.empty():
 		newCard = deck[0]
 		countAs(deck[0].value)
@@ -76,7 +79,7 @@ func drawCard():
 			charlieSeven()
 	else:
 		reShuffleDeck()
-	checkLife()
+	endTurn()
 
 func reShuffleDeck():
 	emit_signal("reShuffleSignal")
@@ -219,12 +222,16 @@ func cardPressed(var c):
 func endTurn():
 	enemyTurn = true
 	timerTurn.start(1)
-	emit_signal("endTurnSignal")
+	timerPlayerAction.start(0.35)
+	checkLife()
 
 func newTurn():
 	drawingCard = false
 	enemyTurn = false
 	emit_signal("newTurnSignal")
+
+func endAnimationTimer():
+	emit_signal("endTurnSignal")
 
 func resectGame():
 	resetHand()
