@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Sinking(carlofcool).mp3-bae48eaaad131b2fc5e6f138f5fe62c7.mp3str"
+
+[deps]
+
+source_file="res://Assects/audio/Sinking(carlofcool).mp3"
+dest_files=[ "res://.import/Sinking(carlofcool).mp3-bae48eaaad131b2fc5e6f138f5fe62c7.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

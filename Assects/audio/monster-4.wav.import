@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/monster-4.wav-b3c75db33e94a678446fc84e5a16423f.sample"
+
+[deps]
+
+source_file="res://Assects/audio/monster-4.wav"
+dest_files=[ "res://.import/monster-4.wav-b3c75db33e94a678446fc84e5a16423f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

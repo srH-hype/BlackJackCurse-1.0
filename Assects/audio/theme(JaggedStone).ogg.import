@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/theme(JaggedStone).ogg-72a194ef46f5683f61dfc0146ea226a5.oggstr"
+
+[deps]
+
+source_file="res://Assects/audio/theme(JaggedStone).ogg"
+dest_files=[ "res://.import/theme(JaggedStone).ogg-72a194ef46f5683f61dfc0146ea226a5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

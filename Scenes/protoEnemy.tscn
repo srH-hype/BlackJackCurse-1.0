@@ -9,4 +9,8 @@ script = ExtResource( 2 )
 rect = Rect2( 1, 1, 95, 95 )
 
 [node name="spriteEnemy" type="Sprite" parent="."]
+scale = Vector2( 1e-05, 1e-05 )
 centered = false
+vframes = 2
+
+[node name="audioEnemy" type="AudioStreamPlayer" parent="."]

@@ -36,6 +36,7 @@ func _ready():
 	GameManager.connect("cardFireSignal", self,"cardFire")
 	EnemiesSingelton.connect("signalRemove",self, "removeEnemy")
 
+#Creating the level.
 func build_level():
 	
 	rooms.clear()
@@ -72,7 +73,8 @@ func build_level():
 	movePlayer()
 	
 	#Enemies
-	var num_enemies = 21
+	EnemiesSingelton.enemiesPerLevel()
+	var num_enemies = EnemiesSingelton.enemiesInLevel
 	
 	for i in range(num_enemies):
 		var room = rooms[1 + randi() % (rooms.size() - 1)]
@@ -87,7 +89,7 @@ func build_level():
 			
 		if !blocked:
 			var newEnemy = ENEMY.instance()
-			newEnemy.create(EnemiesSingelton.enemyDefault,x,y)
+			newEnemy.create(EnemiesSingelton.enemiesList[i],x,y)
 			newEnemy.position = newEnemy.tile * TILE_SIZE
 			$enemies.add_child(newEnemy)
 			enemies.append(newEnemy)
@@ -371,6 +373,9 @@ func act(enemy):
 				enemy.tile = move_tile
 	enemy.position = enemy.tile * TILE_SIZE
 	
+	if enemy.doubleAttack && enemy.firstMove:
+		enemy.firstMoveM()
+		act(enemy)
 
 func set_tile(x, y, type):
 	map[x][y] = type

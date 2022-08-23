@@ -14,6 +14,7 @@ var timerTurn = Timer.new()
 var timerPlayerAction = Timer.new()
 var drawingCard = false
 var enemyTurn = false
+var currentLevel = 1
 signal drawSignal
 signal discardSignal
 signal cardAudioSignal
@@ -28,6 +29,8 @@ signal gameOverAudio
 signal invalidCardAudio
 signal cardFireSignal(value)
 signal takeDamegeSignal
+signal failSignal
+
 
 #Initializing the game.
 func _ready():
@@ -155,6 +158,7 @@ func gameOver():
 	get_tree().change_scene("res://Scenes/GameOver.tscn")
 
 func handUpTo21():
+	emit_signal("failSignal")
 	if !deck.empty(): 
 		drawingCard = true
 	var damage = handValue - 21
@@ -220,12 +224,13 @@ func cardPressed(var c):
 		print(handValue)
 
 func endTurn():
+	checkLife()
 	enemyTurn = true
 	timerTurn.start(1)
 	timerPlayerAction.start(0.35)
-	checkLife()
 
 func newTurn():
+	checkLife()
 	drawingCard = false
 	enemyTurn = false
 	emit_signal("newTurnSignal")
@@ -242,4 +247,6 @@ func resectGame():
 	fillDeck()
 	randomize()
 	deck.shuffle()
+	currentLevel = 1
+
 

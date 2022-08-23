@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assects/theme.tres" type="Theme" id=1]
 [ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://Assects/icons/CoB_logo.png" type="Texture" id=3]
 [ext_resource path="res://Assects/fonts/Greenscr.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Assects/audio/story time(Augmentality).ogg" type="AudioStream" id=5]
 
 [sub_resource type="DynamicFont" id=2]
 size = 70
@@ -103,5 +104,10 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="menuAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -14.0
+autoplay = true
 
 [connection signal="pressed" from="CenterContainer/Panel/ColorRect/ButtonPlay" to="." method="_on_Button_pressed"]
