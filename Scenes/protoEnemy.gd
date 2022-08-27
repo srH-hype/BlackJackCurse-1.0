@@ -18,6 +18,7 @@ func _ready():
 	timeFrame.set_one_shot(true)
 	add_child(timeFrame)
 	GameManager.connect("newTurnSignal", self,"resetFirstMove")
+	GameManager.connect("blackJackSignal", self, "blackJackEnemy")
 
 func create(enemyType,x,y):
 	hp = enemyType.get("hp")
@@ -61,6 +62,10 @@ func move():
 	else:
 		$spriteEnemy.frame = 3
 	
+
+func blackJackEnemy():
+	if $VisibilityNotifier2D.is_on_screen():
+		takeDamage(21)
 
 func remove():
 	EnemiesSingelton.remove(self)

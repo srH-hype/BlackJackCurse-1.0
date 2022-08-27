@@ -34,19 +34,29 @@ anchor_bottom = 1.0
 margin_top = -8.0
 margin_bottom = -8.0
 color = Color( 0, 0, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="gameOverLabel" type="Label" parent="CenterContainer/Panel/ColorRect"]
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_top = -83.0
-margin_bottom = -39.0
+margin_left = -2.0
+margin_top = -157.0
+margin_right = -2.0
+margin_bottom = -88.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "YOU LOSE"
+align = 1
+valign = 1
+
+[node name="scoreGameOverLabel" type="Label" parent="CenterContainer/Panel/ColorRect"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -97.0
+margin_bottom = -28.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
 align = 1
 valign = 1
 
@@ -60,6 +70,7 @@ margin_top = -21.0
 margin_right = 152.0
 margin_bottom = 21.0
 theme = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
 text = "Try again"
 flat = true
@@ -77,6 +88,7 @@ margin_top = 35.0
 margin_right = 80.0
 margin_bottom = 77.0
 theme = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
 text = "Exit"
 flat = true

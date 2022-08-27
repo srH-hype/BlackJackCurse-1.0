@@ -15,6 +15,7 @@ var timerPlayerAction = Timer.new()
 var drawingCard = false
 var enemyTurn = false
 var currentLevel = 1
+var win = false
 signal drawSignal
 signal discardSignal
 signal cardAudioSignal
@@ -47,6 +48,8 @@ func _ready():
 	randomize()
 	deck.shuffle()
 
+
+#Removing the cards that are in the player's hand from the deck.
 func eraseDuplicateCards():
 	for c1 in range(hand.size()):
 		for c2 in range(deck.size()):
@@ -55,6 +58,7 @@ func eraseDuplicateCards():
 				break
 	print("Deck ", deck.size())
 
+#Creating a deck of cards.
 func fillDeck():
 	deck.clear()
 	var s = 1
@@ -66,10 +70,17 @@ func fillDeck():
 			v = v + 1
 		s += 1
 
-func fillDiscardDeck():
-	for n in range(hand.size()):
-		discardDeck.append(SmallCard.new(hand[n].suit,hand[n].value))
 
+#Adding the cards in the player's hand to the discard deck.
+func fillDiscardDeck():
+	if hand.empty():
+		for n in range(hand.size()):
+			discardDeck.append(SmallCard.new(hand[n].suit,hand[n].value))
+
+#This function is drawing a card from the deck. It is checking if the deck is empty. 
+#If it is not, it is adding the card to the player's hand.also checking if the player's hand has 7 cards. 
+#If it does, it is calling the charlieSeven function. If the deck is empty, it is calling the reShuffleDeck function.
+#also calling the endTurn function.
 func drawCard():
 	if !deck.empty():
 		newCard = deck[0]
@@ -94,6 +105,7 @@ func reShuffleDeck():
 	if drawingCard == false :
 		emit_signal("drawSignal")
 
+#This function is counting the number of Aces in the player's hand.
 func countAs(value):
 	if value == 1 :
 		asInHand += 1
@@ -143,6 +155,7 @@ func checkHand():
 		blackJack()
 
 func charlieSeven():
+	win = true
 	print("Charlie Seven")
 	life = 21
 	fillDiscardDeck()
@@ -223,12 +236,20 @@ func cardPressed(var c):
 		checkHand()
 		print(handValue)
 
+#This function is called when the player ends his turn. It is checking if the player's 
+#life is less than or equal to 0. If it is, it is calling the gameOver function.
+#also setting the drawingCard variable to false and the enemyTurn variable to false. 
+#It is also emitting the newTurnSignal.
 func endTurn():
 	checkLife()
 	enemyTurn = true
 	timerTurn.start(1)
 	timerPlayerAction.start(0.35)
 
+#This function is called when the enemy's turn is over. It is checking if the player's 
+#life is less than or equal to 0. If it is, it is calling the gameOver function.
+#also setting the drawingCard variable to false and the enemyTurn variable to false. 
+#It is also emitting the newTurnSignal.
 func newTurn():
 	checkLife()
 	drawingCard = false
@@ -238,6 +259,7 @@ func newTurn():
 func endAnimationTimer():
 	emit_signal("endTurnSignal")
 
+#Reseting the game.
 func resectGame():
 	resetHand()
 	handValue = 0
