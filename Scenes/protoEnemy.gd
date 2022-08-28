@@ -19,6 +19,7 @@ func _ready():
 	add_child(timeFrame)
 	GameManager.connect("newTurnSignal", self,"resetFirstMove")
 	GameManager.connect("blackJackSignal", self, "blackJackEnemy")
+	GameManager.connect("charlieSevenSignal", self,"charlie7Enemy")
 
 func create(enemyType,x,y):
 	hp = enemyType.get("hp")
@@ -66,6 +67,10 @@ func move():
 func blackJackEnemy():
 	if $VisibilityNotifier2D.is_on_screen():
 		takeDamage(21)
+
+func charlie7Enemy():
+	if $VisibilityNotifier2D.is_on_screen():
+		takeDamage(777)
 
 func remove():
 	EnemiesSingelton.remove(self)

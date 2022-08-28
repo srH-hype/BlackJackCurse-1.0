@@ -155,6 +155,7 @@ func checkHand():
 		blackJack()
 
 func charlieSeven():
+	timerGameOver.start(0.5)
 	win = true
 	print("Charlie Seven")
 	life = 21
