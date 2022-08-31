@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://Assects/sprites/spritesheetJack.png" type="Texture" id=1]
 [ext_resource path="res://Assects/icons/endTurnLogo.png" type="Texture" id=2]
@@ -271,6 +271,10 @@ animations = [ {
 [sub_resource type="DynamicFont" id=4]
 size = 130
 outline_color = Color( 1, 0, 0, 1 )
+font_data = ExtResource( 19 )
+
+[sub_resource type="DynamicFont" id=18]
+size = 56
 font_data = ExtResource( 19 )
 
 [node name="Game" type="Node2D"]
@@ -593,6 +597,19 @@ __meta__ = {
 
 [node name="timerBJ" type="Timer" parent="Interface/blackJack"]
 wait_time = 0.35
+
+[node name="levelLabel" type="Label" parent="Interface"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -2.0
+margin_top = -289.0
+margin_right = -2.0
+margin_bottom = -220.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 18 )
+align = 1
+valign = 1
 
 [node name="audioGame" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 38 )

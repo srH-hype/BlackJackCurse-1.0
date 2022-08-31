@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 var countBlackJack = 0
+var timerLabel = Timer.new()
 
 func _ready():
 	$deckButton/Particles2D.emitting = true
@@ -17,6 +18,12 @@ func _ready():
 	GameManager.connect("gameOverAudio", self, "playGameOVerAudio")
 	GameManager.connect("invalidCardAudio", self, "playInvalidCardAudio")
 	GameManager.connect("newTurnSignal", self, "newTurn")
+	GameManager.connect("newLevelSignal", self, "newLevel")
+	$levelLabel.text = "Level "+str(GameManager.currentLevel)
+	timerLabel.connect("timeout",self,"turnOffLabel")
+	timerLabel.set_one_shot(true)
+	add_child(timerLabel)
+	timerLabel.start(1.4)
 	drawCard()
 
 func _on_deckButton_pressed():
@@ -128,4 +135,10 @@ func playInvalidCardAudio():
 func _on_charlieSeven_animation_finished():
 	$charlieSeven.play("null")
 
+func newLevel():
+	$levelLabel.visible = true
+	$levelLabel.text = "Level "+str(GameManager.currentLevel)
+	timerLabel.start(1.4)
 
+func turnOffLabel():
+	$levelLabel.visible = false

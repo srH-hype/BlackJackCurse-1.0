@@ -1,6 +1,6 @@
 extends Node
 
-var enemiesInLevel = 14
+var enemiesInLevel = 0
 var enemiesList = []
 signal signalRemove(enemy)
 
@@ -70,10 +70,8 @@ var enemyTentecle = {
 
 func enemiesPerLevel():
 	randomize()
-	if GameManager.currentLevel != 1:
-		enemiesInLevel = enemiesInLevel + GameManager.currentLevel
-	else:
-		enemiesInLevel = 14
+	enemiesInLevel = 13 + GameManager.currentLevel
+	enemiesList.clear()
 	
 	var numberEnemyType = 0
 	var helperVariableEnemies = enemiesInLevel
@@ -98,7 +96,6 @@ func enemiesPerLevel():
 					enemiesList.insert(e,enemyBanana)
 				7:
 					enemiesList.insert(e,enemyTentecle)
-
 
 func remove(enemy):
 	emit_signal("signalRemove",enemy)

@@ -31,7 +31,7 @@ signal invalidCardAudio
 signal cardFireSignal(value)
 signal takeDamegeSignal
 signal failSignal
-
+signal newLevelSignal
 
 #Initializing the game.
 func _ready():
@@ -272,4 +272,6 @@ func resectGame():
 	deck.shuffle()
 	currentLevel = 1
 
-
+func newLevel():
+	currentLevel = currentLevel + 1
+	emit_signal("newLevelSignal")

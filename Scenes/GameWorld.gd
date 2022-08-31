@@ -35,6 +35,7 @@ func _ready():
 	GameManager.connect("endTurnSignal", self, "endTurnSig")
 	GameManager.connect("cardFireSignal", self,"cardFire")
 	EnemiesSingelton.connect("signalRemove",self, "removeEnemy")
+	
 
 #Creating the level.
 func build_level():
@@ -408,3 +409,9 @@ func cardFire(value):
 func removeEnemy(enemy):
 	enemies.erase(enemy)
 	$enemies.remove_child(enemy)
+	if enemies.empty():
+		newLevel()
+
+func newLevel():
+	GameManager.newLevel()
+	_ready()
