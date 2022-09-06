@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assects/theme.tres" type="Theme" id=1]
 [ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://Assects/icons/CoB_logo.png" type="Texture" id=3]
 [ext_resource path="res://Assects/fonts/Greenscr.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://Assects/audio/story time(Augmentality).ogg" type="AudioStream" id=5]
+[ext_resource path="res://Assects/icons/logo_small_color_light.png" type="Texture" id=6]
+[ext_resource path="res://Assects/icons/NewLogo.png" type="Texture" id=7]
 
 [sub_resource type="DynamicFont" id=2]
 size = 70
@@ -16,14 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="CenterContainer"]
+[node name="Panel" type="Panel" parent="."]
 margin_right = 1024.0
 margin_bottom = 800.0
 rect_min_size = Vector2( 1024, 800 )
@@ -31,23 +26,68 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="CenterContainer/Panel"]
+[node name="ColorRect" type="ColorRect" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 1, 0, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="ButtonPlay" type="Button" parent="CenterContainer/Panel/ColorRect"]
+[node name="ButtonPlay" type="Button" parent="Panel/ColorRect"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -208.0
-margin_top = 184.0
-margin_right = -16.0
-margin_bottom = 267.0
+margin_left = -289.0
+margin_top = 140.0
+margin_right = -97.0
+margin_bottom = 223.0
+theme = ExtResource( 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+flat = true
+
+[node name="ButtonEsp" type="Button" parent="Panel/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -286.48
+margin_top = 223.595
+margin_right = -94.4802
+margin_bottom = 306.595
+theme = ExtResource( 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+text = "Espa¤ol"
+flat = true
+
+[node name="ButtonEng" type="Button" parent="Panel/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 111.52
+margin_top = 223.595
+margin_right = 303.52
+margin_bottom = 306.595
+theme = ExtResource( 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+disabled = true
+text = "English"
+flat = true
+
+[node name="ButtonHowTo" type="Button" parent="Panel/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 46.0
+margin_top = 140.0
+margin_right = 238.0
+margin_bottom = 223.0
 theme = ExtResource( 1 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -57,25 +97,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonExit" type="Button" parent="CenterContainer/Panel/ColorRect"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 37.0
-margin_top = 184.0
-margin_right = 229.0
-margin_bottom = 267.0
-theme = ExtResource( 1 )
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-flat = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/Panel/ColorRect"]
+[node name="TextureRect" type="TextureRect" parent="Panel/ColorRect"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -86,11 +108,8 @@ margin_right = 3565.0
 margin_bottom = 3379.0
 rect_scale = Vector2( 0.11, 0.11 )
 texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Label" type="Label" parent="CenterContainer/Panel/ColorRect"]
+[node name="Label" type="Label" parent="Panel/ColorRect"]
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
@@ -105,9 +124,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="logo2" type="ColorRect" parent="Panel/ColorRect"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.8, 0.8, 0.8, 1 )
+
+[node name="LogoSmallColorLight" type="Sprite" parent="Panel/ColorRect/logo2"]
+position = Vector2( 507.948, 357.751 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 7 )
+
+[node name="logo1" type="ColorRect" parent="Panel/ColorRect"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="LogoSmallColorLight" type="Sprite" parent="Panel/ColorRect/logo1"]
+position = Vector2( 502.468, 366.548 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 6 )
+
+[node name="Timer" type="Timer" parent="Panel/ColorRect"]
+autostart = true
+
 [node name="menuAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 volume_db = -14.0
 autoplay = true
 
-[connection signal="pressed" from="CenterContainer/Panel/ColorRect/ButtonPlay" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Panel/ColorRect/ButtonPlay" to="." method="_on_ButtonPlay_pressed"]
+[connection signal="pressed" from="Panel/ColorRect/ButtonEsp" to="." method="_on_ButtonEsp_pressed"]
+[connection signal="pressed" from="Panel/ColorRect/ButtonEng" to="." method="_on_ButtonEng_pressed"]
+[connection signal="timeout" from="Panel/ColorRect/Timer" to="." method="_on_Timer_timeout"]

@@ -73,7 +73,7 @@ func fillDeck():
 
 #Adding the cards in the player's hand to the discard deck.
 func fillDiscardDeck():
-	if hand.empty():
+	if life >= 0:
 		for n in range(hand.size()):
 			discardDeck.append(SmallCard.new(hand[n].suit,hand[n].value))
 

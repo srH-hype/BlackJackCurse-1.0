@@ -1,3 +1,23 @@
 ,en,es
 bPlay,Play,Jugar
 bExit,Exit,Salir
+howTo,How to play,Como jugar 
+endTurn,End turn,Acabar turno
+drawCard,Draw card,Robar carta
+hand,Hand,Mano
+beCareful,Be careful if the value of your hand exceeds 21 because you will lose a turn and receive the excess of 21 as damage,Ten cuidado si el valor de tu mano pasa de 21 porque perderás turno y recibes el excedente de 21 como daño
+blackjack,"If you have 21, you activate a special power that attacks all enemies you see.",Si tienes 21 activas un poder especial que ataca a todos enemigos que veas
+clickCards,Cards in your hand can be clicked to use their power and are discarded,Se puede hacer click en las cartas en tu mano para usar su poder y son descartadas
+redCards,Red cards do damage to the enemies around you equal to their value,Las cartas rojas hacen daño a los enemigos a tu alrededor equivalente a su valor
+lifeBar,"Life bar, if it reaches 0 you lose","Barra de vida, si llega a 0 pierdes"
+blackCards,"Black cards heal their value, but cannot be used if your life is full","Las cartas negras te curan su valor, pero no se pueden usar si tu vida está llena"
+discard,View discarded cards,Ver las cartas descartadas
+deck,When the deck runs out all discarded cards are shuffled back into the deck,Cuando el mazo se acaba todas las cartas descartadas se vuelven a barajear en el mazo
+defeatAll,Defeat all enemies to advance to the next level of the dungeon,Derrota a todos los enemigos para avanzar al siguiente nivel de la mazmorra
+goal,Descend as far as you can,Desciende lo mas que puedas
+gameOver,Game over,Fin del juego
+tryAgain,Try again,Volver a intentar 
+win,Win,Ganaste
+question,CHARLIE knows another way to win,CHARLIE conoce otra manera de ganar
+score,Score,Puntuación
+move,"W, A, S, D to move","W, A, S, D para moverse"
