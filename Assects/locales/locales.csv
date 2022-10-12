@@ -1,16 +1,16 @@
 ,en,es
 bPlay,Play,Jugar
 bExit,Exit,Salir
-howTo,How to play,Como jugar 
+howTo,How to play,Como jugar
 endTurn,End turn,Acabar turno
 drawCard,Draw card,Robar carta
 hand,Hand,Mano
-beCareful,Be careful if the value of your hand exceeds 21 because you will lose a turn and receive the excess of 21 as damage,Ten cuidado si el valor de tu mano pasa de 21 porque perderás turno y recibes el excedente de 21 como daño
+beCareful,Be careful if the value of your hand exceeds 21 because you will lose a turn and receive the excess of 21 as damage,Ten cuidado si el valor de tu mano pasa de 21 porque perderas turno y recibes el excedente de 21 como un ataque
 blackjack,"If you have 21, you activate a special power that attacks all enemies you see.",Si tienes 21 activas un poder especial que ataca a todos enemigos que veas
 clickCards,Cards in your hand can be clicked to use their power and are discarded,Se puede hacer click en las cartas en tu mano para usar su poder y son descartadas
-redCards,Red cards do damage to the enemies around you equal to their value,Las cartas rojas hacen daño a los enemigos a tu alrededor equivalente a su valor
+redCards,Red cards deal damage to the enemies around you equal to their value,Las cartas rojas atacan a los enemigos a tu alrededor equivalente a su valor
 lifeBar,"Life bar, if it reaches 0 you lose","Barra de vida, si llega a 0 pierdes"
-blackCards,"Black cards heal their value, but cannot be used if your life is full","Las cartas negras te curan su valor, pero no se pueden usar si tu vida está llena"
+blackCards,"Black cards heal their value, but cannot be used if your life is full","Las cartas negras te curan su valor, pero no se pueden usar si tu vida esta llena"
 discard,View discarded cards,Ver las cartas descartadas
 deck,When the deck runs out all discarded cards are shuffled back into the deck,Cuando el mazo se acaba todas las cartas descartadas se vuelven a barajear en el mazo
 defeatAll,Defeat all enemies to advance to the next level of the dungeon,Derrota a todos los enemigos para avanzar al siguiente nivel de la mazmorra
@@ -19,5 +19,20 @@ gameOver,Game over,Fin del juego
 tryAgain,Try again,Volver a intentar 
 win,Win,Ganaste
 question,CHARLIE knows another way to win,CHARLIE conoce otra manera de ganar
-score,Score,Puntuación
-move,"W, A, S, D to move","W, A, S, D para moverse"
+score,Score,Puntuacion
+move,"Use W A S D to move","W A S D para moverse"
+labelLevel,Level,Nivel
+lose,You lose,Perderdiste
+restart,Press R to restart the game,Tecla R para reiniciar la partida
+scene1,Jack Lantern is a thief who has long gone unpunished for his actions,Jack Lantern es en ladron que por mucho tiempo salio impune de sus actos
+scene2,Until one day he was a victim of his own greed and decided to steal a cursed object,Hasta que un dia fue victima de su propia avaricia y decidido robar un objeto maldito
+scene3,It was a deck of cards that when he touched them Jack felt forced to take out 2 cards and when he saw them he saw that it was a Blackjack,Era una baraja de cartas que al tocarlas Jack se sintio forzado a sacar 2 cartas al verlas vio que era un Blackjack
+scene4,Before Jack could react darkness took over the place and a mysterious entity appeared,Antes de que Jack pudiera reaccionar la oscuridad se apodero del lugar y un misterioso ente aparecio
+scene5,After letting out a disturbing and hysterical laugh the entity said "My name is Jack in the Box and I see you have luck with cards so I guess you will be a great participant in my game", Despues de soltar una inquietante e histerica risa el ente dijo "Mi nombre es Jack in the Box y veo que tienes suerte con las cartas asi que supongo que seras un gran participante en mi juego"
+scene6,"Defeat all the monsters on each floor to go to the next one, I'll give you the power of my deck so you can see I'm not so bad. Let's see how far you get but I doubt you can win","Vence a todos los monstruos en cada piso para ir al siguiente. Te dare el poder de mi baraja para que veas que no soy tan malo. Veamos que tan lejos llegas pero dudo que puedas ganar"
+credits,Credits,Creditos
+programing,Programing and development,Programacion y desarrollo
+assets,Assets,Recursos
+translation,Translation,Traduccion
+thanks,And thanks to you for playing,Y gracias a ti por jugar
+skip,Skip,Saltar

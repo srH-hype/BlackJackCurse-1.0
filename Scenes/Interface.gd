@@ -19,11 +19,11 @@ func _ready():
 	GameManager.connect("invalidCardAudio", self, "playInvalidCardAudio")
 	GameManager.connect("newTurnSignal", self, "newTurn")
 	GameManager.connect("newLevelSignal", self, "newLevel")
-	$levelLabel.text = "Level "+str(GameManager.currentLevel)
+	$levelLabel.text = tr("labelLevel")+" "+str(GameManager.currentLevel)
 	timerLabel.connect("timeout",self,"turnOffLabel")
 	timerLabel.set_one_shot(true)
 	add_child(timerLabel)
-	timerLabel.start(1.4)
+	timerLabel.start(1.6)
 	drawCard()
 
 func _on_deckButton_pressed():
@@ -62,7 +62,6 @@ func endTurn():
 	$deckButton.disabled = true
 	endTurnAnimation()
 	updateLifeBar()
-	print("end turn")
 
 func _on_timerHand_timeout():
 	GameManager.resetHand()
@@ -137,7 +136,7 @@ func _on_charlieSeven_animation_finished():
 
 func newLevel():
 	$levelLabel.visible = true
-	$levelLabel.text = "Level "+str(GameManager.currentLevel)
+	$levelLabel.text = tr("labelLevel")+" "+str(GameManager.currentLevel)
 	timerLabel.start(1.4)
 
 func turnOffLabel():

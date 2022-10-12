@@ -1,6 +1,5 @@
 extends Node
 
-onready var Game = get_node('/root/Game/')
 var deck = Array()
 var cardBack = preload("res://Assects/cards/card_back.png")
 var handValue = 0
@@ -16,6 +15,7 @@ var drawingCard = false
 var enemyTurn = false
 var currentLevel = 1
 var win = false
+var language = "en"
 signal drawSignal
 signal discardSignal
 signal cardAudioSignal
@@ -56,7 +56,6 @@ func eraseDuplicateCards():
 			if deck[c2].value == hand[c1].value && deck[c2].suit == hand[c1].suit :
 				deck.remove(c2)
 				break
-	print("Deck ", deck.size())
 
 #Creating a deck of cards.
 func fillDeck():
@@ -87,7 +86,6 @@ func drawCard():
 		countAs(deck[0].value)
 		updateCard(deck[0].value)
 		hand.append(deck[0])
-		print(handValue)
 		deck.remove(0)
 		if hand.size() == 7 && handValue < 21:
 			charlieSeven()
@@ -157,13 +155,11 @@ func checkHand():
 func charlieSeven():
 	timerGameOver.start(0.5)
 	win = true
-	print("Charlie Seven")
 	life = 21
 	fillDiscardDeck()
 	emit_signal("charlieSevenSignal")
 
 func blackJack():
-	print("BlackJack")
 	life = 21
 	fillDiscardDeck()
 	emit_signal("blackJackSignal")
@@ -191,7 +187,6 @@ func checkLife():
 		timerGameOver.start(0.5)
 
 func healing(value):
-	print(cardValue(value), " Healing")
 	if life + value >= 21:
 		life = 21
 	else:
@@ -235,7 +230,6 @@ func cardPressed(var c):
 				emit_signal("drawSignal")
 			emit_signal("discardSignal")
 		checkHand()
-		print(handValue)
 
 #This function is called when the player ends his turn. It is checking if the player's 
 #life is less than or equal to 0. If it is, it is calling the gameOver function.
@@ -275,3 +269,9 @@ func resectGame():
 func newLevel():
 	currentLevel = currentLevel + 1
 	emit_signal("newLevelSignal")
+
+func _input(event):
+	if event.is_action_pressed("restart"):
+		if get_tree().current_scene.name == "Game":
+			resectGame()
+			get_tree().reload_current_scene()

@@ -1,0 +1,266 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assects/fonts/Greenscr.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scenes/Credits.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/creditsMove.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=2]
+size = 42
+font_data = ExtResource( 1 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 67.5361, 17.6133 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 35
+font_data = ExtResource( 1 )
+
+[node name="Credits" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 13.0
+margin_top = 625.0
+margin_right = 170.0
+margin_bottom = 697.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Esta"
+flat = true
+
+[node name="creditsMove" type="KinematicBody2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="creditsMove"]
+position = Vector2( 498.039, 746.279 )
+shape = SubResource( 3 )
+
+[node name="programing1" type="Label" parent="creditsMove"]
+margin_left = 220.23
+margin_top = 775.949
+margin_right = 349.23
+margin_bottom = 825.949
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Esta"
+
+[node name="name1" type="Label" parent="creditsMove"]
+margin_left = 220.23
+margin_top = 843.949
+margin_right = 842.23
+margin_bottom = 893.949
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Heriberto Imperial Badillo"
+
+[node name="translation1" type="Label" parent="creditsMove"]
+margin_left = 416.576
+margin_top = 923.142
+margin_right = 641.576
+margin_bottom = 973.142
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Esta"
+
+[node name="name2" type="Label" parent="creditsMove"]
+margin_left = 220.23
+margin_top = 1025.78
+margin_right = 842.23
+margin_bottom = 1075.78
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Heriberto Imperial Badillo"
+
+[node name="name3" type="Label" parent="creditsMove"]
+margin_left = 205.23
+margin_top = 974.777
+margin_right = 922.23
+margin_bottom = 1024.78
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Jesus Alberto Cossio Rodriguez"
+
+[node name="assets1" type="Label" parent="creditsMove"]
+margin_left = 410.0
+margin_top = 1109.0
+margin_right = 581.0
+margin_bottom = 1159.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Esta"
+
+[node name="assets2" type="Label" parent="creditsMove"]
+margin_left = 129.038
+margin_top = 1154.26
+margin_right = 819.038
+margin_bottom = 1204.26
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Font Green Screen by James Shields"
+
+[node name="assets3" type="Label" parent="creditsMove"]
+margin_left = 237.879
+margin_top = 1195.12
+margin_right = 836.879
+margin_bottom = 1245.12
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Casino Audio by Kenney.nl"
+
+[node name="assets4" type="Label" parent="creditsMove"]
+margin_left = 152.572
+margin_top = 1234.41
+margin_right = 892.572
+margin_bottom = 1284.41
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Playing Cards Pack by Kenney.nl"
+
+[node name="assets5" type="Label" parent="creditsMove"]
+margin_left = 244.164
+margin_top = 1273.88
+margin_right = 818.164
+margin_bottom = 1323.88
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "explosion by TinyWorlds"
+
+[node name="assets6" type="Label" parent="creditsMove"]
+margin_left = 244.164
+margin_top = 1273.88
+margin_right = 818.164
+margin_bottom = 1323.88
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "explosion by TinyWorlds"
+
+[node name="assets7" type="Label" parent="creditsMove"]
+margin_left = 318.083
+margin_top = 1315.12
+margin_right = 724.083
+margin_bottom = 1365.12
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "achieved by Basto"
+
+[node name="assets8" type="Label" parent="creditsMove"]
+margin_left = 268.694
+margin_top = 1353.76
+margin_right = 769.694
+margin_bottom = 1403.76
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "dark magic by qubodup"
+
+[node name="assets9" type="Label" parent="creditsMove"]
+margin_left = 239.51
+margin_top = 1394.63
+margin_right = 788.51
+margin_bottom = 1444.63
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "noise select by @shades"
+
+[node name="assets10" type="Label" parent="creditsMove"]
+margin_left = 129.897
+margin_top = 1430.11
+margin_right = 912.897
+margin_bottom = 1480.11
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "80 CC0 creature SFX by rubberduck"
+
+[node name="assets11" type="Label" parent="creditsMove"]
+margin_left = 221.754
+margin_top = 1465.74
+margin_right = 805.754
+margin_bottom = 1515.74
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "flame by themightyglider"
+
+[node name="assets12" type="Label" parent="creditsMove"]
+margin_left = 261.058
+margin_top = 1505.52
+margin_right = 764.058
+margin_bottom = 1555.52
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Sinking by carlofcool"
+
+[node name="assets13" type="Label" parent="creditsMove"]
+margin_left = 227.04
+margin_top = 1539.52
+margin_right = 848.04
+margin_bottom = 1589.52
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "story time by Augmentality"
+
+[node name="assets14" type="Label" parent="creditsMove"]
+margin_left = 279.917
+margin_top = 1581.26
+margin_right = 760.917
+margin_bottom = 1631.26
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "theme by JaggedStone"
+
+[node name="assets15" type="Label" parent="creditsMove"]
+margin_left = 175.343
+margin_top = 1617.8
+margin_right = 866.343
+margin_bottom = 1667.8
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "witch cackle 1 by AntumDeluge"
+
+[node name="software1" type="Label" parent="creditsMove"]
+margin_left = 377.411
+margin_top = 1683.73
+margin_right = 581.411
+margin_bottom = 1733.73
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Software"
+
+[node name="software2" type="Label" parent="creditsMove"]
+margin_left = 374.043
+margin_top = 1719.65
+margin_right = 578.043
+margin_bottom = 1769.65
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Godot 3.5"
+
+[node name="software3" type="Label" parent="creditsMove"]
+margin_left = 393.842
+margin_top = 1756.42
+margin_right = 597.842
+margin_bottom = 1806.42
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Krita 5"
+
+[node name="software4" type="Label" parent="creditsMove"]
+margin_left = 347.173
+margin_top = 1791.78
+margin_right = 632.173
+margin_bottom = 1841.78
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Inkscape 1.1"
+
+[node name="thanks" type="Label" parent="creditsMove"]
+margin_left = 255.214
+margin_top = 2057.44
+margin_right = 381.214
+margin_bottom = 2107.44
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "esta"
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

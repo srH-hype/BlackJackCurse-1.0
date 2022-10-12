@@ -66,7 +66,6 @@ func build_level():
 	
 	connect_rooms()
 	
-	
 	var start_room = rooms.front()
 	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x - 2)
 	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y - 2)
@@ -390,7 +389,6 @@ func endTurnSig():
 		act(enemy)
 
 func cardFire(value):
-	print("Damage" +" "+ String(value))
 	var tilesAround = []
 	
 	tilesAround.append(Vector2(player_tile.x+1,player_tile.y))
